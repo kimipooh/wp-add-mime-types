@@ -1,0 +1,67 @@
+# Copyright (C) 2013 WP Add Mime Types
+# This file is distributed under the same license as the WP Add Mime Types package.
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Add Mime Types 1.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/wp-add-mime-types\n"
+"POT-Creation-Date: 2013-08-09 09:21:50+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2013-08-09 18:43+0900\n"
+"Last-Translator: \n"
+"Language-Team: Kimiya Kitani <kitani@cseas.kyoto-u.ac.jp>\n"
+"X-Generator: Poedit 1.5.7\n"
+"Language: Japanese\n"
+
+#: wp-add-mime-types.php:24 wp-add-mime-types.php:56
+msgid "WP Add Mime Types Admin Settings"
+msgstr "WP Add Mime Types 管理設定"
+
+#: wp-add-mime-types.php:24
+msgid "Mime Type Settings"
+msgstr "Mime Type設定"
+
+#: wp-add-mime-types.php:53
+msgid "Updated"
+msgstr "更新しました"
+
+#: wp-add-mime-types.php:60
+msgid "List of allowed mime types and file extensions by WordPress"
+msgstr "WordPressによって許可された「Mime Type」「拡張子」一覧"
+
+#: wp-add-mime-types.php:96
+msgid "Add Values"
+msgstr "追加の項目"
+
+#: wp-add-mime-types.php:97
+msgid ""
+"* About the mime type value for the file extension, please search \"mime "
+"type [file extension name] using a search engine.<br/> Ex. \"epub = "
+"application/epub+zip in http://ja.wikipedia.org/wiki/EPUB.\""
+msgstr ""
+"※ Mime Typeや拡張子については、「mime type 拡張子名」等で検索して調べてみてく"
+"ださい。<br/> 例）epub = application/epub+zip（情報源：http://ja.wikipedia."
+"org/wiki/EPUB）"
+
+#: wp-add-mime-types.php:105
+msgid "Save"
+msgstr "設定の保存"
+
+#. Plugin Name of the plugin/theme
+msgid "WP Add Mime Types"
+msgstr "WP Add Mime Types"
+
+#. Description of the plugin/theme
+msgid ""
+"The plugin additionally allows the mime types and file extensions to "
+"WordPress."
+msgstr "このプラグインは、「Mime Type」や「拡張子」をWordPressに追加します。"
+
+#. Author of the plugin/theme
+msgid "Kimiya Kitani"
+msgstr "木谷 公哉"
+
+#. Author URI of the plugin/theme
+msgid "http://kitaney.jp/~kitani"
+msgstr "http://kitaney.jp/~kitani"
