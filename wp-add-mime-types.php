@@ -3,7 +3,7 @@
 Plugin Name: WP Add Mime Types 
 Plugin URI: 
 Description: The plugin additionally allows the mime types and file extensions to WordPress.
-Version: 1.3.0
+Version: 1.3.2
 Author: Kimiya Kitani
 Author URI: http://kitaney.jp/~kitani
 */
@@ -12,7 +12,7 @@ Author URI: http://kitaney.jp/~kitani
 load_plugin_textdomain('wp-add-mime-types', '/'.str_replace(ABSPATH, '', dirname(__FILE__)) . '/lang/');
 
 $default_var = array(
-	'wp_add_mime_types'	=>	'1.3.0',
+	'wp_add_mime_types'	=>	'1.3.2',
 );
 
 // Add Setting to WordPress 'Settings' menu. 
