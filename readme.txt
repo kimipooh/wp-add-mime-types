@@ -38,6 +38,9 @@ You can see the list of allowed mime types and file extensions by WordPress.
 
 == Changelog ==
 
+= 1.3.3 = 
+* Tested up to WordPress 4.1.1
+
 = 1.3.2 = 
 * Tested up to WordPress 4.0
 
