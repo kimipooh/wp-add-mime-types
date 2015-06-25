@@ -3,16 +3,17 @@
 Plugin Name: WP Add Mime Types 
 Plugin URI: 
 Description: The plugin additionally allows the mime types and file extensions to WordPress.
-Version: 1.3.3
+Version: 1.3.6-dev
 Author: Kimiya Kitani
 Author URI: http://kitaney.jp/~kitani
 */
 
 // Multi-language support.
-load_plugin_textdomain('wp-add-mime-types', '/'.str_replace(ABSPATH, '', dirname(__FILE__)) . '/lang/');
+load_plugin_textdomain( 'wp-add-mime-types' )
+	or load_plugin_textdomain('wp-add-mime-types', false, 'wp-add-mime-types/lang/');
 
 $default_var = array(
-	'wp_add_mime_types'	=>	'1.3.2',
+	'wp_add_mime_types'	=>	'1.3.6-dev',
 );
 
 // Add Setting to WordPress 'Settings' menu. 
@@ -100,7 +101,7 @@ foreach($allowed_mime_values as $type=>$value){
 	<?php // If the permission is not allowed, the user can only read the setting. ?>
 		<textarea name="mime_type_values" cols="100" rows="10" <?php if(!$permission) echo "disabled"; ?>><?php if(isset($mimes) && is_array($mimes)) foreach ($mimes as $m_type=>$m_value) echo $m_type . "\t= " .$m_value . "\n"; ?></textarea>
      </fieldset>
-
+     
      <br/>
      
      <input type="submit" value="<?php _e('Save', 'wp-add-mime-types');  ?>" />
