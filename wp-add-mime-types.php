@@ -3,9 +3,9 @@
 Plugin Name: WP Add Mime Types 
 Plugin URI: 
 Description: The plugin additionally allows the mime types and file extensions to WordPress.
-Version: 1.3.9
+Version: 1.3.10
 Author: Kimiya Kitani
-Author URI: http://kitaney.jp/~kitani
+Author URI: http://kitaney-wordpress.blogspot.jp/
 */
 
 // Multi-language support.
@@ -17,7 +17,7 @@ add_action('plugins_loaded', 'enable_language_translation');
 
 
 $default_var = array(
-	'wp_add_mime_types'	=>	'1.3.9',
+	'wp_add_mime_types'	=>	'1.3.10',
 );
 
 // Add Setting to WordPress 'Settings' menu. 
