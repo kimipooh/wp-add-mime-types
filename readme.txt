@@ -3,7 +3,7 @@ Contributors: Kimiya Kitani
 Tags: mime,file extention
 Requires at least: 3.0
 Tested up to: 4.4.2
-Stable tag: 1.3.11
+Stable tag: 1.3.12
 
 The plugin additionally allows the mime types and file extensions to WordPress.
  
@@ -16,7 +16,7 @@ The plugin additionally allows the mime types and file extensions to WordPress. 
 
 The operation is the simple.
 Please install this plugin and activate it.
-
+If you use a language except English, please update the translation data in the updates of Dashboard.
 
 = Usage =
 
@@ -30,6 +30,8 @@ You can see the list of allowed mime types and file extensions by WordPress.
 
  The user who have the [manage_options](http://codex.wordpress.org/Roles_and_Capabilities#manage_options) permission can only add the setting.
 
+ If you would like to translate it to your language, please visit the GlotPress from https://wordpress.org/plugins/wp-add-mime-types/ .
+ 
 == Frequently Asked Questions ==
 
 
@@ -37,6 +39,9 @@ You can see the list of allowed mime types and file extensions by WordPress.
 1. Setting Menu
 
 == Changelog ==
+
+= 1.3.12 = 
+* Migrated the translation function to GlotPress. If you translate it to your language, please visit the GlotPress from https://wordpress.org/plugins/wp-add-mime-types/ .
 
 = 1.3.11 = 
 * Preparation of migrating the translation function to GlotPress.
