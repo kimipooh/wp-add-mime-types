@@ -5,7 +5,7 @@ Plugin URI:
 Description: The plugin additionally allows the mime types and file extensions to WordPress.
 Version: 1.3.13
 Author: Kimiya Kitani
-Author URI: http://kitaney-wordpress.blogspot.jp/
+Author URI: https://profiles.wordpress.org/kimipooh/
 Text Domain: wp-add-mime-types
 Domain Path: /lang
 */
