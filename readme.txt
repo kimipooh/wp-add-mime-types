@@ -3,20 +3,21 @@ Contributors: Kimiya Kitani
 Tags: mime,file extention
 Requires at least: 3.0
 Tested up to: 4.5
-Stable tag: 1.3.13
+Stable tag: 2.0.0
 
 The plugin additionally allows the mime types and file extensions to WordPress.
  
 == Description ==
 
-The plugin additionally allows the mime types and file extensions to WordPress. In other words, your WordPress site can upload various file extensions. The support language is English and Japanese.
-
+The plugin additionally allows the mime types and file extensions to WordPress. In other words, your WordPress site can upload various file extensions. 
 
 == Installation ==
 
 The operation is the simple.
 Please install this plugin and activate it.
 If you use a language except English, please update the translation data in the updates of Dashboard.
+
+If the multisite is enabled, please check the setting menu in the network administrator. 
 
 = Usage =
 
@@ -31,14 +32,19 @@ You can see the list of allowed mime types and file extensions by WordPress.
  The user who have the [manage_options](http://codex.wordpress.org/Roles_and_Capabilities#manage_options) permission can only add the setting.
 
  If you would like to translate it to your language, please visit the GlotPress from https://wordpress.org/plugins/wp-add-mime-types/ .
+
+ If the multisite is enabled, the multisite network administrator can add/change/delete the mime type value in the multisite network setting menu. And the multisite network administrator can see the past value before the site was migrated to the multisite. The site administrator can only see the values added by the multisite network administrator (cannot change).
+ 
  
 == Frequently Asked Questions ==
-
 
 == Screenshots ==
 1. Setting Menu
 
 == Changelog ==
+
+= 2.0.0 = 
+* Supported Multisite.
 
 = 1.3.13 = 
 * Tested up to WordPress 4.5.
