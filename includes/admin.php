@@ -9,8 +9,10 @@ function add_to_settings_menu(){
 // Processing Setting menu for the plugin.
 function admin_settings_page(){
 	global $plugin_basename;
-
-	$admin_permission = 'manage_options';
+	if ( ! function_exists( 'is_plugin_active_for_network' ) ) 
+    	require_once( ABSPATH . '/wp-admin/includes/plugin.php' );	
+    	
+    $admin_permission = 'manage_options';
     // Loading the stored setting data (wp_add_mime_types_array) from WordPress database.
    	if(is_multisite() && is_plugin_active_for_network($plugin_basename)){
 		$settings = get_site_option('wp_add_mime_types_network_array');   	
@@ -33,7 +35,6 @@ function admin_settings_page(){
 		$settings['mime_type_values'] = serialize($mime_type_values);
     }else
       $mime_type_values = unserialize($settings['mime_type_values']);
-      
       
 	// Update to WordPress Data.
    	if(is_multisite() && is_plugin_active_for_network($plugin_basename))

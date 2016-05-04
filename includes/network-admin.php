@@ -2,6 +2,9 @@
 
 function network_add_to_settings_menu(){
 	global $plugin_basename;
+	if ( ! function_exists( 'is_plugin_active_for_network' ) ) 
+    	require_once( ABSPATH . '/wp-admin/includes/plugin.php' );	
+    		
 	if( ! is_multisite() || ! is_plugin_active_for_network($plugin_basename))
 		return ;
 	
