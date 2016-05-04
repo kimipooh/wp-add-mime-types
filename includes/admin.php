@@ -8,10 +8,11 @@ function add_to_settings_menu(){
 
 // Processing Setting menu for the plugin.
 function admin_settings_page(){
-	$admin_permission = 'manage_options';
+	global $plugin_basename;
 
+	$admin_permission = 'manage_options';
     // Loading the stored setting data (wp_add_mime_types_array) from WordPress database.
-   	if(is_multisite()){
+   	if(is_multisite() && is_plugin_active_for_network($plugin_basename)){
 		$settings = get_site_option('wp_add_mime_types_network_array');   	
 		$past_settings = get_option('wp_add_mime_types_array');
 	}else
@@ -35,7 +36,7 @@ function admin_settings_page(){
       
       
 	// Update to WordPress Data.
-   	if(is_multisite())
+   	if(is_multisite() && is_plugin_active_for_network($plugin_basename))
 		get_site_option('wp_add_mime_types_network_array', $settings);
 	else
 		update_option('wp_add_mime_types_array', $settings);
@@ -86,10 +87,10 @@ foreach($allowed_mime_values as $type=>$value){
      <fieldset style="border:1px solid #777777; width: 750px; padding-left: 6px;">
 		<legend><h3><?php _e('Add Values','wp-add-mime-types'); ?></h3></legend>
 		<p><?php  _e('* About the mime type value for the file extension, please search "mime type [file extension name] using a search engine.<br/> Ex. "epub = application/epub+zip in http://ja.wikipedia.org/wiki/EPUB."','wp-add-mime-types'); ?></p>
-		<p><span style="color:red;"><?php  if(is_multisite()) _e('* The site administrator cannot add the value for mime type because the multisite is enabled. <br/>Please contact the multisite administrator if you would like to add the value.','wp-add-mime-types'); ?></span></p>
+		<p><span style="color:red;"><?php  if(is_multisite() && is_plugin_active_for_network($plugin_basename)) _e('* The site administrator cannot add the value for mime type because the multisite is enabled. <br/>Please contact the multisite administrator if you would like to add the value.','wp-add-mime-types'); ?></span></p>
 
 	<?php // If the permission is not allowed, the user can only read the setting. ?>
-		<textarea name="mime_type_values" cols="100" rows="10" <?php if(!$permission || is_multisite()) echo "disabled"; ?>><?php if(isset($mimes) && is_array($mimes)) foreach ($mimes as $m_type=>$m_value) echo $m_type . "\t= " .$m_value . "\n"; ?></textarea>
+		<textarea name="mime_type_values" cols="100" rows="10" <?php if(!$permission || (is_multisite() && is_plugin_active_for_network($plugin_basename))) echo "disabled"; ?>><?php if(isset($mimes) && is_array($mimes)) foreach ($mimes as $m_type=>$m_value) echo $m_type . "\t= " .$m_value . "\n"; ?></textarea>
      </fieldset>
 
 <?php

@@ -2,7 +2,7 @@
 Contributors: Kimiya Kitani
 Tags: mime,file extention
 Requires at least: 3.0
-Tested up to: 4.5
+Tested up to: 4.5.1
 Stable tag: 2.0.0
 
 The plugin additionally allows the mime types and file extensions to WordPress.
@@ -13,7 +13,6 @@ The plugin additionally allows the mime types and file extensions to WordPress. 
 
 == Installation ==
 
-The operation is the simple.
 Please install this plugin and activate it.
 If you use a language except English, please update the translation data in the updates of Dashboard.
 
@@ -33,18 +32,26 @@ You can see the list of allowed mime types and file extensions by WordPress.
 
  If you would like to translate it to your language, please visit the GlotPress from https://wordpress.org/plugins/wp-add-mime-types/ .
 
- If the multisite is enabled, the multisite network administrator can add/change/delete the mime type value in the multisite network setting menu. And the multisite network administrator can see the past value before the site was migrated to the multisite. The site administrator can only see the values added by the multisite network administrator (cannot change).
- 
+ If the multisite is enabled, the multisite network administrator can add/change/delete the mime type value in the multisite network setting menu. And the multisite network administrator or the site administrator can only see the past value (cannot change) before the site was migrated to the multisite.
  
 == Frequently Asked Questions ==
 
+= How do the plugin behave when it is installed and activated on the multisite network administration dashboard? =
+The setting in the multisite network administration dashboard is taken precedence. The setting in each site administration dashboard is displayed, but the values aren't applied.
+
+= How do the plugin behave when it is deactivated on the multisite network administration dashboard? =
+
+The setting values in each site administration dashboard is applied. 
+
 == Screenshots ==
 1. Setting Menu
+2. Setting Menu in case of the multisite
 
 == Changelog ==
 
 = 2.0.0 = 
 * Supported Multisite.
+* Tested up to WordPress 4.5.1
 
 = 1.3.13 = 
 * Tested up to WordPress 4.5.

@@ -1,6 +1,10 @@
 <?php
 
 function network_add_to_settings_menu(){
+	global $plugin_basename;
+	if( ! is_multisite() || ! is_plugin_active_for_network($plugin_basename))
+		return ;
+	
 	$admin_permission = 'manage_network_options';
 
     // add_options_page (Title, Setting Title, Permission, Special Definition, function name); 
