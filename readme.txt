@@ -39,9 +39,13 @@ You can see the list of allowed mime types and file extensions by WordPress.
 = How do the plugin behave when it is installed and activated on the multisite network administration dashboard? =
 The setting in the multisite network administration dashboard is taken precedence. The setting in each site administration dashboard is displayed, but the values aren't applied.
 
-= How do the plugin behave when it is deactivated on the multisite network administration dashboard? =
+= How do the plugin behave when it is deactivated/uninstalled on the multisite network administration dashboard? =
 
-The setting values in each site administration dashboard is applied. 
+The setting values in each site administration dashboard in case of activating the plugin in each site is applied. 
+
+= Don't the setting values in the multisite network administration dashboard  and the setting values in each site administration dashboard influence each other? =
+
+Yes, each setting values are saved as the other setting items.
 
 == Screenshots ==
 1. Setting Menu
