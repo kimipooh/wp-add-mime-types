@@ -3,7 +3,7 @@ Contributors: Kimiya Kitani
 Tags: mime,file extention
 Requires at least: 3.0
 Tested up to: 4.5.1
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 
 The plugin additionally allows the mime types and file extensions to WordPress.
  
@@ -52,6 +52,9 @@ Yes, each setting values are saved as the other setting items.
 2. Setting Menu in case of the multisite
 
 == Changelog ==
+
+= 2.0.1 = 
+* Fixed the message in the setting menu
 
 = 2.0.0 = 
 * Supported Multisite.

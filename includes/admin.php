@@ -102,7 +102,7 @@ foreach($allowed_mime_values as $type=>$value){
      <br/>
      <fieldset style="border:1px solid #777777; width: 750px; padding-left: 6px;">
 		<legend><h3><?php _e('Past Add Values before Multisite function was enabled.','wp-add-mime-types'); ?></h3></legend>
-		<p><span style="color:red;"><?php  _e('* This is for a multisite network administrator when the site  was multisite.<br/> The following values are disabled after multisite function was enabled.','wp-add-mime-types'); ?></span></p>
+		<p><span style="color:red;"><?php  _e('* This is for  multisite network administrators and site administrators.<br/> The following values are disabled after multisite function was enabled.','wp-add-mime-types'); ?></span></p>
 
 	<?php // If the permission is not allowed, the user can only read the setting. ?>
 		<textarea name="mime_type_values" cols="100" rows="10" disabled><?php if(isset($past_mime_type_values) && is_array($past_mime_type_values)) foreach ($past_mime_type_values as $m_type=>$m_value) echo  esc_html($m_value) . "\n"; ?></textarea>
