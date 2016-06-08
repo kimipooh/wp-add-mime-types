@@ -63,7 +63,7 @@ foreach ($mime_type_values as $line){
    if(count($line_value) != 2) continue;
    $mimes[trim($line_value[0])] = trim($line_value[1]); 
 }   
-    
+
 // List view of the allowed mime types including the addition (red color) in the admin settings.
 foreach($allowed_mime_values as $type=>$value){
   if(isset($mimes)){
@@ -74,7 +74,6 @@ foreach($allowed_mime_values as $type=>$value){
               break;
         }
      }
-
      echo "<tr><td$add_mime_type_check>$type</td><td$add_mime_type_check>=</td><td$add_mime_type_check>$value</td></tr>\n";
   }else
      echo "<tr><td>$type</td><td>=</td><td>$value</td></tr>\n";
@@ -87,7 +86,7 @@ foreach($allowed_mime_values as $type=>$value){
 
      <fieldset style="border:1px solid #777777; width: 750px; padding-left: 6px;">
 		<legend><h3><?php _e('Add Values','wp-add-mime-types'); ?></h3></legend>
-		<p><?php  _e('* About the mime type value for the file extension, please search "mime type [file extension name] using a search engine.<br/> Ex. "epub = application/epub+zip in http://ja.wikipedia.org/wiki/EPUB."','wp-add-mime-types'); ?></p>
+		<p><?php  _e('* About the mime type value for the file extension, please search "mime type [file extension name] using a search engine.<br/>Ex. epub = application/epub+zip<br/>Reference: <a href="http://www.iana.org/assignments/media-types/media-types.xhtml" target="_blank">Media Types on the Internet Assigned Numbers Authority (IANA)</a><br/>* If the added mime type does not work, please turn off the mime type setting or deactivate other mime type plugins.','wp-add-mime-types'); ?></p>
 		<p><span style="color:red;"><?php  if(is_multisite() && is_plugin_active_for_network($plugin_basename)) _e('* The site administrator cannot add the value for mime type because the multisite is enabled. <br/>Please contact the multisite administrator if you would like to add the value.','wp-add-mime-types'); ?></span></p>
 
 	<?php // If the permission is not allowed, the user can only read the setting. ?>

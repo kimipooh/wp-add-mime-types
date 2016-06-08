@@ -2,8 +2,8 @@
 Contributors: Kimiya Kitani
 Tags: mime,file extention
 Requires at least: 3.0
-Tested up to: 4.5.1
-Stable tag: 2.0.2
+Tested up to: 4.5.2
+Stable tag: 2.0.3
 
 The plugin additionally allows the mime types and file extensions to WordPress.
  
@@ -36,6 +36,11 @@ You can see the list of allowed mime types and file extensions by WordPress.
  
 == Frequently Asked Questions ==
 
+= Cannot work =
+If the added mime type does not work, please turn off the mime type setting or deactivate other mime type plugins.
+
+For example, if you install Media Library Assistant plugin, please turn off "Enable Upload MIME Type Support" in the Upload tag in this plugin setting.
+
 = How do the plugin behave when it is installed and activated on the multisite network administration dashboard? =
 The setting in the multisite network administration dashboard is taken precedence. The setting in each site administration dashboard is displayed, but the values aren't applied.
 
@@ -52,6 +57,10 @@ Yes, each setting values are saved as the other setting items.
 2. Setting Menu in case of the multisite
 
 == Changelog ==
+
+= 2.0.3 = 
+* Fixed the help message in the administration menu.
+* If the added mime type does not work, please turn off the mime type setting or deactivate other mime type plugins.
 
 = 2.0.2 = 
 * Fixed the compatibility with Media Library Assistant plugin.

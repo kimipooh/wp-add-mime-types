@@ -3,7 +3,7 @@
 Plugin Name: WP Add Mime Types 
 Plugin URI: 
 Description: The plugin additionally allows the mime types and file extensions to WordPress.
-Version: 2.0.2
+Version: 2.0.3
 Author: Kimiya Kitani
 Author URI: http://kitaney-wordpress.blogspot.jp/
 Text Domain: wp-add-mime-types
@@ -19,7 +19,7 @@ add_action('plugins_loaded', 'enable_language_translation');
 $plugin_basename = plugin_basename ( __FILE__ );
 
 $default_var = array(
-	'wp_add_mime_types'	=>	'2.0.2',
+	'wp_add_mime_types'	=>	'2.0.3',
 );
 
 // Add Setting to WordPress 'Settings' menu for Multisite.
@@ -29,8 +29,6 @@ if(is_multisite()){
 }
 add_action('admin_menu', 'add_to_settings_menu');
 require_once( dirname( __FILE__  ) . '/includes/admin.php');
-
-
 
 // Procedure for adding the mime types and file extensions to WordPress.
 function add_allow_upload_extension( $mimes ) {
@@ -42,7 +40,7 @@ function add_allow_upload_extension( $mimes ) {
 		$settings = get_site_option('wp_add_mime_types_network_array');
 	else
 		$settings = get_option('wp_add_mime_types_array');
-
+		
 	if(!isset($settings['mime_type_values']) || empty($settings['mime_type_values'])) return $mimes;
 	else
 		$mime_type_values = unserialize($settings['mime_type_values']);
@@ -56,11 +54,8 @@ function add_allow_upload_extension( $mimes ) {
       $mimes[trim($line_value[0])] = trim(str_replace("　", " ", $line_value[1])); 
     }
     
-    //$mimes['dot'] = 'application/word';
-
     return $mimes;
 }
 
 // Register the Procedure process to WordPress.
-add_filter( 'upload_mimes', 'add_allow_upload_extension' );
-
+add_filter( 'upload_mimes', 'add_allow_upload_extension');
