@@ -2,8 +2,8 @@
 Contributors: Kimiya Kitani
 Tags: mime,file extention
 Requires at least: 3.0
-Tested up to: 4.7
-Stable tag: 2.0.6
+Tested up to: 4.7.1
+Stable tag: 2.1.0
 
 The plugin additionally allows the mime types and file extensions to WordPress.
  
@@ -36,6 +36,8 @@ You can see the list of allowed mime types and file extensions by WordPress.
  
 == Frequently Asked Questions ==
 
+* (Above 4.7.1) In case of custom extension in this plugins' setting, the WordPress 4.7.1 file contents check system using finfo_info function is always true.
+
 = Cannot work =
 If the added mime type does not work, please deactivate other mime type plugins or the setting of other mime type plugins.
 
@@ -57,6 +59,10 @@ Yes, each setting values are saved as the other setting items.
 2. Setting Menu in case of the multisite
 
 == Changelog ==
+
+= 2.1.0 = 
+* Tested up to WordPress 4.7.1
+* Fixed finfo_file issue. See FAQ section.
 
 = 2.0.6 = 
 * Tested up to WordPress 4.7
