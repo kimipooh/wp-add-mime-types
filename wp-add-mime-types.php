@@ -3,7 +3,7 @@
 Plugin Name: WP Add Mime Types 
 Plugin URI: 
 Description: The plugin additionally allows the mime types and file extensions to WordPress.
-Version: 2.1.0
+Version: 2.1.1
 Author: Kimiya Kitani
 Author URI: http://kitaney-wordpress.blogspot.jp/
 Text Domain: wp-add-mime-types
@@ -19,7 +19,7 @@ add_action('plugins_loaded', 'enable_language_translation');
 $plugin_basename = plugin_basename ( __FILE__ );
 
 $default_var = array(
-	'wp_add_mime_types'	=>	'2.1.0',
+	'wp_add_mime_types'	=>	'2.1.1',
 );
 
 // Add Setting to WordPress 'Settings' menu for Multisite.
@@ -65,8 +65,9 @@ add_filter( 'upload_mimes', 'add_allow_upload_extension');
 // In case of custom extension in this plugins' setting, the WordPress 4.7.1 file contents check system is always true.
 function add_allow_upload_extension_exception( $file, $filename, $mimes ) {
 	global $plugin_basename;
-	$ext = $type = $proper_filename = false;
+	list($ext, $type, $proper_filename) = explode($file);
     list($f_name,$f_ext) = explode(".", $mimes);
+	if($ext != false && $type != false) return $file;
 
 	if ( ! function_exists( 'is_plugin_active_for_network' ) ) 
     	require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
@@ -80,6 +81,7 @@ function add_allow_upload_extension_exception( $file, $filename, $mimes ) {
 	else
 		$mime_type_values = unserialize($settings['mime_type_values']);
 
+	$flag = false;
     foreach ($mime_type_values as $line){
       $line_value = explode("=", $line);
       if(count($line_value) != 2) continue;
@@ -88,11 +90,14 @@ function add_allow_upload_extension_exception( $file, $filename, $mimes ) {
       if(trim($line_value[0]) === $f_ext){
       		 $ext = $f_ext;
       		 $type = trim(str_replace("　", " ", $line_value[1])); 
+      		 $flag = true;
       		 break;
       }
     }
-     
-    return compact( 'ext', 'type', 'proper_filename' );
+	if($flag)
+	    return compact( 'ext', 'type', 'proper_filename' );
+	else
+		return $file;
 }
 
 add_filter( 'wp_check_filetype_and_ext', 'add_allow_upload_extension_exception',10,3);
