@@ -3,7 +3,7 @@
 Plugin Name: WP Add Mime Types 
 Plugin URI: 
 Description: The plugin additionally allows the mime types and file extensions to WordPress.
-Version: 2.1.1
+Version: 2.1.2
 Author: Kimiya Kitani
 Author URI: http://kitaney-wordpress.blogspot.jp/
 Text Domain: wp-add-mime-types
@@ -65,9 +65,13 @@ add_filter( 'upload_mimes', 'add_allow_upload_extension');
 // In case of custom extension in this plugins' setting, the WordPress 4.7.1 file contents check system is always true.
 function add_allow_upload_extension_exception( $file, $filename, $mimes ) {
 	global $plugin_basename;
-	list($ext, $type, $proper_filename) = explode($file);
-    list($f_name,$f_ext) = explode(".", $mimes);
-	if($ext != false && $type != false) return $file;
+	$ext = $type = $proper_filename = false;
+	if(isset($file['ext'])) $ext = $file['ext'];
+	if(isset($file['type'])) $ext = $file['type'];
+	if(isset($file['proper_filename'])) $ext = $file['proper_filename'];
+	if($ext != false && $type != false) return $file;	
+
+	list($f_name,$f_ext) = explode(".", $mimes);
 
 	if ( ! function_exists( 'is_plugin_active_for_network' ) ) 
     	require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
