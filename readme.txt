@@ -2,8 +2,8 @@
 Contributors: Kimiya Kitani
 Tags: mime,file extention
 Requires at least: 3.0
-Tested up to: 4.7.2
-Stable tag: 2.1.2
+Tested up to: 4.8
+Stable tag: 2.1.3
 
 The plugin additionally allows the mime types and file extensions to WordPress.
  
@@ -59,6 +59,9 @@ Yes, each setting values are saved as the other setting items.
 2. Setting Menu in case of the multisite
 
 == Changelog ==
+
+= 2.1.3 = 
+* Tested up to WordPress 4.8 and PHP 7.1
 
 = 2.1.2 = 
 * Fixed the warning issue regarding explode function. 
