@@ -3,7 +3,7 @@ Contributors: Kimiya Kitani
 Tags: mime,file extention
 Requires at least: 3.0
 Tested up to: 4.8
-Stable tag: 2.1.3
+Stable tag: 2.2.0
 
 The plugin additionally allows the mime types and file extensions to WordPress.
  
@@ -36,6 +36,9 @@ You can see the list of allowed mime types and file extensions by WordPress.
  
 == Frequently Asked Questions ==
 
+* Can I comment out in the setting value?
+Yes. You can comment out above version 2.3.0.
+
 * (Above 4.7.1) In case of custom extension in this plugins' setting, the WordPress 4.7.1 file contents check system using finfo_info function is always true.
 
 = Cannot work =
@@ -57,8 +60,15 @@ Yes, each setting values are saved as the other setting items.
 == Screenshots ==
 1. Setting Menu
 2. Setting Menu in case of the multisite
+3. Ignore to the right of '#' on a line
+
 
 == Changelog ==
+
+= 2.2.0 = 
+* Fixed foreach function warning if a setting value is empty.
+* Added to escape HTML tags in a setting value using wp_strip_all_tags function.
+* Added to ignore to the right of '#' on a line.
 
 = 2.1.3 = 
 * Tested up to WordPress 4.8 and PHP 7.1
