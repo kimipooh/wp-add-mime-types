@@ -1,9 +1,10 @@
 === WP Add Mime Types ===
 Contributors: Kimiya Kitani
 Tags: mime,file extention
-Requires at least: 3.0
-Tested up to: 4.9
-Stable tag: 2.2.1
+Requires at least: 4.0
+Requires PHP: 5.6
+Tested up to: 5.0
+Stable tag: 2.3.0
 
 The plugin additionally allows the mime types and file extensions to WordPress.
  
@@ -64,6 +65,9 @@ Yes, each setting values are saved as the other setting items.
 
 
 == Changelog ==
+
+= 2.3.0 = 
+* Tested up to WordPress 5.0 and PHP 7.2.
 
 = 2.2.1 = 
 * Tested up to WordPress 4.9.
