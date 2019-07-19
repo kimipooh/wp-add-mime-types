@@ -3,8 +3,8 @@ Contributors: Kimiya Kitani
 Tags: mime,file extention
 Requires at least: 4.0
 Requires PHP: 5.6
-Tested up to: 5.0
-Stable tag: 2.3.0
+Tested up to: 5.2.2
+Stable tag: 2.3.1
 License: GPL v2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -68,6 +68,9 @@ Yes, each setting values are saved as the other setting items.
 
 
 == Changelog ==
+
+= 2.3.1 = 
+* Tested up to WordPress 5.2.2 and PHP 7.3.
 
 = 2.3.0 = 
 * Tested up to WordPress 5.0 and PHP 7.2.
