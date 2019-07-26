@@ -3,7 +3,7 @@
 Plugin Name: WP Add Mime Types 
 Plugin URI: 
 Description: The plugin additionally allows the mime types and file extensions to WordPress.
-Version: 2.3.0
+Version: 2.4.0
 Author: Kimiya Kitani
 Author URI: http://kitaney-wordpress.blogspot.jp/
 Text Domain: wp-add-mime-types
@@ -19,7 +19,7 @@ add_action('plugins_loaded', 'enable_language_translation');
 $plugin_basename = plugin_basename ( __FILE__ );
 
 $default_var = array(
-	'wp_add_mime_types'	=>	'2.3.0',
+	'wp_add_mime_types'	=>	'2.4.0',
 );
 
 // Add Setting to WordPress 'Settings' menu for Multisite.
@@ -66,7 +66,7 @@ function add_allow_upload_extension( $mimes ) {
 // Register the Procedure process to WordPress.
 add_filter( 'upload_mimes', 'add_allow_upload_extension');
 
-// Exception for WordPress 4.7.1 file contents check system using finfo_file (wp-include/functions.php)
+// Exception for WordPress 4.7.1 file contents check system using finfo_file (wp-includes/functions.php)
 // In case of custom extension in this plugins' setting, the WordPress 4.7.1 file contents check system is always true.
 function add_allow_upload_extension_exception( $file, $filename, $mimes ) {
 	global $plugin_basename;
@@ -78,8 +78,20 @@ function add_allow_upload_extension_exception( $file, $filename, $mimes ) {
 	if(isset($file['proper_filename'])) $ext = $file['proper_filename'];
 	if($ext != false && $type != false) return $file;	
 
-	list($f_name,$f_ext) = explode(".", $mimes);
+	// If file extension is 2 or more 
+	$f_sp = explode(".", $mimes);
+	$f_exp_count  = count ($f_sp);
 
+	// Filename type is "XXX" (There is not file extension). 
+	if($f_exp_count <= 1){
+		return $file;
+	/* Even if the file extension is "XXX.ZZZ", "XXX.YYY.ZZZ", "AAA.XXX.YYY.ZZZ" or more, it always picks up  the tail of the extensions.
+	*/
+	}else{
+		$f_name = $f_sp[0];
+		$f_ext  = $f_sp[$f_exp_count - 1];
+	}
+ 
 	if ( ! function_exists( 'is_plugin_active_for_network' ) ) 
     	require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 
@@ -102,7 +114,7 @@ function add_allow_upload_extension_exception( $file, $filename, $mimes ) {
 			
 			$line_value = explode("=", $line);
 			if(count($line_value) != 2) continue;
-			// "　" is the Japanese multi-byte space. If the character is found out, it automatically change the space. 
+			// "　" is the Japanese multi-byte space. If the character is found out, it automatically change the space. 		
 			if(trim($line_value[0]) === $f_ext){
 				$ext = $f_ext;
 				$type = trim(str_replace("　", " ", $line_value[1])); 
@@ -111,6 +123,18 @@ function add_allow_upload_extension_exception( $file, $filename, $mimes ) {
 			}
 		}
 	}
+	// WordPress sanitizes the filename in case of 2 or more extensions. 
+	// ex. XXX.YYY.ZZZ --> XXX_.YYY.ZZZ.
+	// The following function fixes the sanitized extension when a file is uploaded in the media in case of allowed extensions. 
+	// ex. XXX.YYY.ZZZ -- sanitized --> XXX_.YYY.ZZZ -- fixed the plugin --> XXX.YYY.ZZZ
+	// In detail, please see sanitize_file_name function in "wp-includes/formatting.php".
+	if($f_exp_count > 2){
+		function remove_underscore($filename, $filename_raw){
+			return str_replace("_.", ".", $filename);
+		}
+		add_filter( 'sanitize_file_name', 'remove_underscore', 10, 2 );
+	}
+
 	if($flag)
 	    return compact( 'ext', 'type', 'proper_filename' );
 	else

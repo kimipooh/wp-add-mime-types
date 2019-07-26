@@ -3,8 +3,8 @@ Contributors: Kimiya Kitani
 Tags: mime,file extention
 Requires at least: 4.0
 Requires PHP: 5.6
-Tested up to: 5.0
-Stable tag: 2.3.0
+Tested up to: 5.2.2
+Stable tag: 2.4.0
 License: GPL v2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,6 +40,14 @@ You can see the list of allowed mime types and file extensions by WordPress.
  
 == Frequently Asked Questions ==
 
+* Can the plugin support the multi extensions?
+Yes. The function was supported by Version 2.4.0.
+WordPress sanitizes the filename in case of 2 or more extensions.
+ex. XXX.YYY.ZZZ --> XXX_.YYY.ZZZ.
+The plugin fixes the sanitized extension when a file is uploaded in the media in case of allowed extensions. 
+ex. XXX.YYY.ZZZ -- sanitized --> XXX_.YYY.ZZZ -- fixed the plugin --> XXX.YYY.ZZZ
+In detail, please see sanitize_file_name function in "wp-includes/formatting.php".
+
 * Can I comment out in the setting value?
 Yes. You can comment out above version 2.3.0.
 
@@ -68,6 +76,12 @@ Yes, each setting values are saved as the other setting items.
 
 
 == Changelog ==
+
+= 2.4.0 = 
+* Support of the multi extension. Even if the file extension is "XXX.ZZZ", "XXX.YYY.ZZZ", "AAA.XXX.YYY.ZZZ" or more, it always picks up the tail of the extensions.
+
+= 2.3.1 = 
+* Tested up to WordPress 5.2.2 and PHP 7.3.
 
 = 2.3.0 = 
 * Tested up to WordPress 5.0 and PHP 7.2.
