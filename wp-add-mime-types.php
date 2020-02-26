@@ -3,7 +3,7 @@
 Plugin Name: WP Add Mime Types 
 Plugin URI: 
 Description: The plugin additionally allows the mime types and file extensions to WordPress.
-Version: 2.4.0
+Version: 2.4.1
 Author: Kimiya Kitani
 Author URI: http://kitaney-wordpress.blogspot.jp/
 Text Domain: wp-add-mime-types
@@ -19,7 +19,7 @@ add_action('plugins_loaded', 'enable_language_translation');
 $plugin_basename = plugin_basename ( __FILE__ );
 
 $default_var = array(
-	'wp_add_mime_types'	=>	'2.4.0',
+	'wp_add_mime_types'	=>	'2.4.1',
 );
 
 // Add Setting to WordPress 'Settings' menu for Multisite.
@@ -129,10 +129,10 @@ function add_allow_upload_extension_exception( $file, $filename, $mimes ) {
 	// ex. XXX.YYY.ZZZ -- sanitized --> XXX_.YYY.ZZZ -- fixed the plugin --> XXX.YYY.ZZZ
 	// In detail, please see sanitize_file_name function in "wp-includes/formatting.php".
 	if($f_exp_count > 2){
-		function remove_underscore($filename, $filename_raw){
+		function wpaddmimetypes_remove_underscore($filename, $filename_raw){
 			return str_replace("_.", ".", $filename);
 		}
-		add_filter( 'sanitize_file_name', 'remove_underscore', 10, 2 );
+		add_filter( 'sanitize_file_name', 'wpaddmimetypes_remove_underscore', 10, 2 );
 	}
 
 	if($flag)

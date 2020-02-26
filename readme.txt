@@ -4,7 +4,7 @@ Tags: mime,file extention
 Requires at least: 4.0
 Requires PHP: 5.6
 Tested up to: 5.2.2
-Stable tag: 2.4.0
+Stable tag: 2.4.1
 License: GPL v2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,9 @@ Yes, each setting values are saved as the other setting items.
 
 
 == Changelog ==
+
+= 2.4.1 = 
+* Changed remove_underscore function name to wpaddmimetypes_remove_underscore because of the avoidance of the name conflict.
 
 = 2.4.0 = 
 * Support of the multi extension. Even if the file extension is "XXX.ZZZ", "XXX.YYY.ZZZ", "AAA.XXX.YYY.ZZZ" or more, it always picks up the tail of the extensions.
