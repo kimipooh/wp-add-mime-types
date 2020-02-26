@@ -79,6 +79,7 @@ Yes, each setting values are saved as the other setting items.
 
 = 2.4.1 = 
 * Changed remove_underscore function name to wpaddmimetypes_remove_underscore because of the avoidance of the name conflict.
+* Tested up to WordPress 5.2.2 and PHP 7.4.
 
 = 2.4.0 = 
 * Support of the multi extension. Even if the file extension is "XXX.ZZZ", "XXX.YYY.ZZZ", "AAA.XXX.YYY.ZZZ" or more, it always picks up the tail of the extensions.
