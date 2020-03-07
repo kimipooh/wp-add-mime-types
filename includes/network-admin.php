@@ -28,14 +28,16 @@ function network_admin_settings_page(){
 	// If the adding data is not set, the value "mime_type_values" sets "empty".
 	if(!isset($settings['mime_type_values']))	$settings['mime_type_values'] = '';
 	// When the adding data is saved (posted) at the setting menu, the data will update to the WordPress database after the security check
-	if(isset($_POST['mime_type_values'])){
-		$p_set = esc_attr(strip_tags(html_entity_decode($_POST['mime_type_values']),ENT_QUOTES));
-		$mime_type_values = explode("\n", $p_set);
-		if(!empty($mime_type_values)){
-			foreach($mime_type_values as $m_type=>$m_value)
-				// "　" is the Japanese multi-byte space. If the character is found out, it automatically change the space. 
-				$mime_type_values[$m_type] = trim(str_replace("　", " ", $m_value));
-			$settings['mime_type_values'] = serialize($mime_type_values);
+	if(isset($_POST['mime_type_values']) && (isset($_POST["wamt-network-form"]) && $_POST["wamt-network-form"])){
+		if(heck_admin_referer("wamt-network-nonce-key", "wamt-network-form")){
+			$p_set = esc_attr(strip_tags(html_entity_decode($_POST['mime_type_values']),ENT_QUOTES));
+			$mime_type_values = explode("\n", $p_set);
+			if(!empty($mime_type_values)){
+				foreach($mime_type_values as $m_type=>$m_value)
+					// "　" is the Japanese multi-byte space. If the character is found out, it automatically change the space. 
+					$mime_type_values[$m_type] = trim(str_replace("　", " ", $m_value));
+				$settings['mime_type_values'] = serialize($mime_type_values);
+			}
 		}
 	}else
 		$mime_type_values = unserialize($settings['mime_type_values']);
@@ -63,6 +65,8 @@ function network_admin_settings_page(){
   <h2><?php _e('WP Add Mime Types Admin Settings for Network Administrator', 'wp-add-mime-types'); ?></h2>
   
   <form method="post" action="">
+	<?php // for CSRF (Cross-Site Request Forgery): https://propansystem.net/blog/2018/02/20/post-6279/
+		wp_nonce_field("wamt-network-nonce-key", "wamt-network-form"); ?>
      <fieldset style="border:1px solid #777777; width: 750px; padding-left: 6px;">
 		<legend><h3><?php _e('List of allowed mime types and file extensions by WordPress','wp-add-mime-types'); ?></h3></legend>
 		<div style="overflow:scroll; height: 500px;">

@@ -4,7 +4,7 @@ Tags: mime,file extention
 Requires at least: 4.0
 Requires PHP: 5.6
 Tested up to: 5.3.2
-Stable tag: 2.5.0
+Stable tag: 2.5.1
 License: GPL v2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -78,6 +78,10 @@ Yes, each setting values are saved as the other setting items.
 
 
 == Changelog ==
+
+= 2.5.1 = 
+* Added the response of CSRF (Cross-Site Request Forgery) vulnerability for this plugin's settings.
+
 = 2.5.0 = 
 * Added the security option item in the admin menu for enabling the security check for a file content and for sanitizing the multiple file extensions within the filename by WordPress core.
 * Supported the new language setting regarding load_plugin_textdomain function.
