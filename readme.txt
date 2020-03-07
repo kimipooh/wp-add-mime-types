@@ -3,8 +3,8 @@ Contributors: Kimiya Kitani
 Tags: mime,file extention
 Requires at least: 4.0
 Requires PHP: 5.6
-Tested up to: 5.2.2
-Stable tag: 2.4.1
+Tested up to: 5.3.2
+Stable tag: 2.5.0
 License: GPL v2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,7 +40,12 @@ You can see the list of allowed mime types and file extensions by WordPress.
  
 == Frequently Asked Questions ==
 
-* Can the plugin support the multi extensions?
+= Cannot work =
+If the added mime type does not work, please deactivate other mime type plugins or the setting of other mime type plugins.
+
+For example, if you install Media Library Assistant plugin, please turn off "Enable Upload MIME Type Support" in the Upload tag in this plugin setting.
+
+= Can the plugin support the multi extensions? =
 Yes. The function was supported by Version 2.4.0.
 WordPress sanitizes the filename in case of 2 or more extensions.
 ex. XXX.YYY.ZZZ --> XXX_.YYY.ZZZ.
@@ -48,15 +53,12 @@ The plugin fixes the sanitized extension when a file is uploaded in the media in
 ex. XXX.YYY.ZZZ -- sanitized --> XXX_.YYY.ZZZ -- fixed the plugin --> XXX.YYY.ZZZ
 In detail, please see sanitize_file_name function in "wp-includes/formatting.php".
 
-* Can I comment out in the setting value?
+= Can I comment out in the setting value? =
 Yes. You can comment out above version 2.3.0.
 
-* (Above 4.7.1) In case of custom extension in this plugins' setting, the WordPress 4.7.1 file contents check system using finfo_info function is always true.
-
-= Cannot work =
-If the added mime type does not work, please deactivate other mime type plugins or the setting of other mime type plugins.
-
-For example, if you install Media Library Assistant plugin, please turn off "Enable Upload MIME Type Support" in the Upload tag in this plugin setting.
+= Can the plugin avoid the security check for a file content by WordPress core? =
+Yes. WordPress core has implemented the security check for a file content since version 4.7.1.
+The plugin's default setting disables this security check .
 
 = How do the plugin behave when it is installed and activated on the multisite network administration dashboard? =
 The setting in the multisite network administration dashboard is taken precedence. The setting in each site administration dashboard is displayed, but the values aren't applied.
@@ -76,6 +78,9 @@ Yes, each setting values are saved as the other setting items.
 
 
 == Changelog ==
+= 2.5.0 = 
+* Added the security option item in the admin menu for enabling the security check for a file content and for sanitizing a filename by WordPress core. 
+* Supported the new language setting regarding load_plugin_textdomain function.
 
 = 2.4.1 = 
 * Changed remove_underscore function name to wpaddmimetypes_remove_underscore because of the avoidance of the name conflict.

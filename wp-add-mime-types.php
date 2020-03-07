@@ -3,7 +3,7 @@
 Plugin Name: WP Add Mime Types 
 Plugin URI: 
 Description: The plugin additionally allows the mime types and file extensions to WordPress.
-Version: 2.4.1
+Version: 2.5.0
 Author: Kimiya Kitani
 Author URI: http://kitaney-wordpress.blogspot.jp/
 Text Domain: wp-add-mime-types
@@ -19,7 +19,7 @@ add_action('plugins_loaded', 'enable_language_translation');
 $plugin_basename = plugin_basename ( __FILE__ );
 
 $default_var = array(
-	'wp_add_mime_types'	=>	'2.4.1',
+	'wp_add_mime_types'	=>	'2.5.0',
 );
 
 // Add Setting to WordPress 'Settings' menu for Multisite.
@@ -34,8 +34,9 @@ require_once( dirname( __FILE__  ) . '/includes/admin.php');
 function add_allow_upload_extension( $mimes ) {
 	global $plugin_basename;
 	$mime_type_values = false;
+	
 	if ( ! function_exists( 'is_plugin_active_for_network' ) ) 
-    	require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+		require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 
 	if(is_multisite() && is_plugin_active_for_network($plugin_basename))
 		$settings = get_site_option('wp_add_mime_types_network_array');
@@ -59,50 +60,72 @@ function add_allow_upload_extension( $mimes ) {
 			$mimes[trim($line_value[0])] = trim(str_replace("　", " ", $line_value[1])); 
 		}
 	}
-	
+
+	if($f_exp_more2_flag === true){
+		add_filter( 'sanitize_file_name', 'wpaddmimetypes_remove_underscore', 10, 2 );
+	}
+
 	return $mimes;
 }
 
 // Register the Procedure process to WordPress.
 add_filter( 'upload_mimes', 'add_allow_upload_extension');
 
+// Using in add_allow_upload_extension_exception function.
+function wpaddmimetypes_remove_underscore($filename, $filename_raw){
+	return str_replace("_.", ".", $filename);
+}
 // Exception for WordPress 4.7.1 file contents check system using finfo_file (wp-includes/functions.php)
 // In case of custom extension in this plugins' setting, the WordPress 4.7.1 file contents check system is always true.
-function add_allow_upload_extension_exception( $file, $filename, $mimes ) {
+function add_allow_upload_extension_exception( $data, $file, $filename,$mimes,$real_mime) {
 	global $plugin_basename;
 	$mime_type_values = false;
-
-	$ext = $type = $proper_filename = false;
-	if(isset($file['ext'])) $ext = $file['ext'];
-	if(isset($file['type'])) $ext = $file['type'];
-	if(isset($file['proper_filename'])) $ext = $file['proper_filename'];
-	if($ext != false && $type != false) return $file;	
-
-	// If file extension is 2 or more 
-	$f_sp = explode(".", $mimes);
-	$f_exp_count  = count ($f_sp);
-
-	// Filename type is "XXX" (There is not file extension). 
-	if($f_exp_count <= 1){
-		return $file;
-	/* Even if the file extension is "XXX.ZZZ", "XXX.YYY.ZZZ", "AAA.XXX.YYY.ZZZ" or more, it always picks up  the tail of the extensions.
-	*/
-	}else{
-		$f_name = $f_sp[0];
-		$f_ext  = $f_sp[$f_exp_count - 1];
-	}
- 
-	if ( ! function_exists( 'is_plugin_active_for_network' ) ) 
-    	require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 
 	if(is_multisite() && is_plugin_active_for_network($plugin_basename))
 		$settings = get_site_option('wp_add_mime_types_network_array');
 	else
 		$settings = get_option('wp_add_mime_types_array');
-		
-	if(!isset($settings['mime_type_values']) || empty($settings['mime_type_values'])) return compact( 'ext', 'type', 'proper_filename' );
+
+	if ( ! function_exists( 'is_plugin_active_for_network' ) )
+		require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+
+	if(!isset($settings['mime_type_values']) || empty($settings['mime_type_values'])) 
+		return compact( 'ext', 'type', 'proper_filename' );
 	else
 		$mime_type_values = unserialize($settings['mime_type_values']);
+
+	$ext = $type = $proper_filename = false;
+	if(isset($data['ext'])) $ext = $data['ext'];
+	if(isset($data['type'])) $ext = $data['type'];
+	if(isset($data['proper_filename'])) $ext = $data['proper_filename'];
+	if($ext != false && $type != false) return $data;	
+
+	// If file extension is 2 or more 
+	$f_sp = explode(".", $filename);
+	$f_exp_count  = count ($f_sp);
+
+	// Filename type is "XXX" (There is not file extension). 
+	if($f_exp_count <= 1){
+		return $data;
+	/* Even if the file extension is "XXX.ZZZ", "XXX.YYY.ZZZ", "AAA.XXX.YYY.ZZZ" or more, it always picks up  the tail of the extensions.
+	*/
+	}else{
+		$f_name = $f_sp[0];
+		$f_ext  = $f_sp[$f_exp_count - 1];
+		// WordPress sanitizes the filename in case of 2 or more extensions. 
+		// ex. XXX.YYY.ZZZ --> XXX_.YYY.ZZZ.
+		// The following function fixes the sanitized extension when a file is uploaded in the media in case of allowed extensions. 
+		// ex. XXX.YYY.ZZZ -- sanitized --> XXX_.YYY.ZZZ -- fixed the plugin --> XXX.YYY.ZZZ
+		// In detail, please see sanitize_file_name function in "wp-includes/formatting.php".
+		if(!(isset($settings['filename_sanitized_enable']) && $settings['filename_sanitized_enable'] === "yes")){
+			add_filter( 'sanitize_file_name', 'wpaddmimetypes_remove_underscore', 10, 2 );
+		}
+	}
+
+	// If "security_attempt_enable" option disables (default) in the admin menu, the plugin avoids the security check regarding a file extension by WordPress core because of flexible management.
+	if(isset($settings['security_attempt_enable']) && $settings['security_attempt_enable'] === "yes"){
+		return $data;
+	}
 
 	$flag = false;
 	if(!empty($mime_type_values)){
@@ -123,22 +146,11 @@ function add_allow_upload_extension_exception( $file, $filename, $mimes ) {
 			}
 		}
 	}
-	// WordPress sanitizes the filename in case of 2 or more extensions. 
-	// ex. XXX.YYY.ZZZ --> XXX_.YYY.ZZZ.
-	// The following function fixes the sanitized extension when a file is uploaded in the media in case of allowed extensions. 
-	// ex. XXX.YYY.ZZZ -- sanitized --> XXX_.YYY.ZZZ -- fixed the plugin --> XXX.YYY.ZZZ
-	// In detail, please see sanitize_file_name function in "wp-includes/formatting.php".
-	if($f_exp_count > 2){
-		function wpaddmimetypes_remove_underscore($filename, $filename_raw){
-			return str_replace("_.", ".", $filename);
-		}
-		add_filter( 'sanitize_file_name', 'wpaddmimetypes_remove_underscore', 10, 2 );
-	}
 
 	if($flag)
 	    return compact( 'ext', 'type', 'proper_filename' );
 	else
-		return $file;
+		return $data;
 }
 
-add_filter( 'wp_check_filetype_and_ext', 'add_allow_upload_extension_exception',10,3);
+add_filter( 'wp_check_filetype_and_ext', 'add_allow_upload_extension_exception',10,5);
