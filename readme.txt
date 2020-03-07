@@ -79,7 +79,7 @@ Yes, each setting values are saved as the other setting items.
 
 == Changelog ==
 = 2.5.0 = 
-* Added the security option item in the admin menu for enabling the security check for a file content and for sanitizing a filename by WordPress core. 
+* Added the security option item in the admin menu for enabling the security check for a file content and for sanitizing the multiple file extensions within the filename by WordPress core.
 * Supported the new language setting regarding load_plugin_textdomain function.
 
 = 2.4.1 = 

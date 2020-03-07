@@ -119,7 +119,7 @@ if(!empty($allowed_mime_values)){
 		</p>
 		<p>
 			<input type="hidden" name="filename_sanitized_enable" value="no" />
-			<input type="checkbox" name="filename_sanitized_enable" value="yes" <?php if( isset($settings['filename_sanitized_enable']) && $settings['filename_sanitized_enable'] === "yes" ) echo "checked"; ?> <?php if(!$permission || (is_multisite() && is_plugin_active_for_network($plugin_basename))) echo "disabled"; ?>/> <?php _e('Enable to sanitize the filename by WordPress core','wp-add-mime-types'); ?>
+			<input type="checkbox" name="filename_sanitized_enable" value="yes" <?php if( isset($settings['filename_sanitized_enable']) && $settings['filename_sanitized_enable'] === "yes" ) echo "checked"; ?> <?php if(!$permission || (is_multisite() && is_plugin_active_for_network($plugin_basename))) echo "disabled"; ?>/> <?php _e('Enable to sanitize the multiple file extensions within the filename by WordPress core.','wp-add-mime-types'); ?>
 			</p>
      </fieldset>
 
