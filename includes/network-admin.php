@@ -17,8 +17,6 @@ function network_add_to_settings_menu(){
 // Processing Setting menu for the plugin.
 function network_admin_settings_page(){
 	$admin_permission = 'manage_network_options';
-	$mime_type_values = false;
-
 	// Loading the stored setting data (wp_add_mime_types_network_array) from WordPress database.
 	$settings = get_site_option('wp_add_mime_types_network_array');
 
@@ -26,37 +24,42 @@ function network_admin_settings_page(){
 	// The user who can manage the WordPress option can only access the Setting menu of this plugin.
 	if(current_user_can($admin_permission)) $permission = true; 
 	// If the adding data is not set, the value "mime_type_values" sets "empty".
-	if(!isset($settings['mime_type_values']))	$settings['mime_type_values'] = '';
-	// When the adding data is saved (posted) at the setting menu, the data will update to the WordPress database after the security check
-	if(isset($_POST['mime_type_values']) && (isset($_POST["wamt-network-form"]) && $_POST["wamt-network-form"])){
-		if(heck_admin_referer("wamt-network-nonce-key", "wamt-network-form")){
-			$p_set = esc_attr(strip_tags(html_entity_decode($_POST['mime_type_values']),ENT_QUOTES));
-			$mime_type_values = explode("\n", $p_set);
-			if(!empty($mime_type_values)){
-				foreach($mime_type_values as $m_type=>$m_value)
-					// "　" is the Japanese multi-byte space. If the character is found out, it automatically change the space. 
-					$mime_type_values[$m_type] = trim(str_replace("　", " ", $m_value));
-				$settings['mime_type_values'] = serialize($mime_type_values);
-			}
-		}
-	}else
+	$mime_type_values = "";
+	if(isset($settings['mime_type_values']) && !empty($settings['mime_type_values']))
 		$mime_type_values = unserialize($settings['mime_type_values']);
+	// When the adding data is saved (posted) at the setting menu, the data will update to the WordPress database after the security check
+	if(isset($_POST["wamt-network-form"]) && $_POST["wamt-network-form"]){
+		if(check_admin_referer("wamt-network-nonce-key", "wamt-network-form")){
+			if(isset($_POST['mime_type_values'])){
+				$p_set = esc_attr(strip_tags(html_entity_decode($_POST['mime_type_values']),ENT_QUOTES));
+				$mime_type_values = explode("\n", $p_set);
+				if(!empty($mime_type_values)){
+					foreach($mime_type_values as $m_type=>$m_value)
+						// "　" is the Japanese multi-byte space. If the character is found out, it automatically change the space. 
+						$mime_type_values[$m_type] = trim(str_replace("　", " ", $m_value));
+					$settings['mime_type_values'] = serialize($mime_type_values);
+				}
+			}
+			//else
+			//	$mime_type_values = unserialize($settings['mime_type_values']);
 
-	if(!isset($settings['security_attempt_enable']))
-		$settings['security_attempt_enable'] = "no";
-	else{
-		if(isset($_POST['security_attempt_enable']))
-			$settings['security_attempt_enable'] = wp_strip_all_tags($_POST['security_attempt_enable']);
-	}
-	if(!isset($settings['filename_sanitized_enable']))
-		$settings['filename_sanitized_enable'] = "no";
-	else{
-		if(isset($_POST['filename_sanitized_enable']))
-			$settings['filename_sanitized_enable'] = wp_strip_all_tags($_POST['filename_sanitized_enable']);
-	}
+			if(!isset($settings['security_attempt_enable']))
+				$settings['security_attempt_enable'] = "no";
+			else{
+				if(isset($_POST['security_attempt_enable']))
+					$settings['security_attempt_enable'] = wp_strip_all_tags($_POST['security_attempt_enable']);
+			}
+			if(!isset($settings['filename_sanitized_enable']))
+				$settings['filename_sanitized_enable'] = "no";
+			else{
+				if(isset($_POST['filename_sanitized_enable']))
+					$settings['filename_sanitized_enable'] = wp_strip_all_tags($_POST['filename_sanitized_enable']);
+			}
 
-	// Update on wp_sitemeta
-	update_site_option('wp_add_mime_types_network_array', $settings);
+			// Update on wp_sitemeta
+			update_site_option('wp_add_mime_types_network_array', $settings);
+		}
+	}
 
 ?>
 <div class="network_add_mime_media_admin_setting_page_updated"><p><strong><?php _e('Updated', 'wp-add-mime-types'); ?></strong></p></div>
