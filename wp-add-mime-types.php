@@ -3,7 +3,7 @@
 Plugin Name: WP Add Mime Types 
 Plugin URI: 
 Description: The plugin additionally allows the mime types and file extensions to WordPress.
-Version: 2.5.2
+Version: 2.5.3
 Author: Kimiya Kitani
 Author URI: http://kitaney-wordpress.blogspot.jp/
 Text Domain: wp-add-mime-types
@@ -19,7 +19,7 @@ add_action('plugins_loaded', 'enable_language_translation');
 $plugin_basename = plugin_basename ( __FILE__ );
 
 $default_var = array(
-	'wp_add_mime_types'	=>	'2.5.2',
+	'wp_add_mime_types'	=>	'2.5.3',
 );
 
 // Add Setting to WordPress 'Settings' menu for Multisite.
@@ -59,10 +59,6 @@ function add_allow_upload_extension( $mimes ) {
 			// "　" is the Japanese multi-byte space. If the character is found out, it automatically change the space. 
 			$mimes[trim($line_value[0])] = trim(str_replace("　", " ", $line_value[1])); 
 		}
-	}
-
-	if($f_exp_more2_flag === true){
-		add_filter( 'sanitize_file_name', 'wpaddmimetypes_remove_underscore', 10, 2 );
 	}
 
 	return $mimes;
@@ -117,7 +113,9 @@ function add_allow_upload_extension_exception( $data, $file, $filename,$mimes,$r
 		// The following function fixes the sanitized extension when a file is uploaded in the media in case of allowed extensions. 
 		// ex. XXX.YYY.ZZZ -- sanitized --> XXX_.YYY.ZZZ -- fixed the plugin --> XXX.YYY.ZZZ
 		// In detail, please see sanitize_file_name function in "wp-includes/formatting.php".
-		if(!(isset($settings['filename_sanitized_enable']) && $settings['filename_sanitized_enable'] === "yes")){
+		//var_dump($settings['filename_sanitized_enable']);
+		if(isset($settings['filename_sanitized_enable']) && $settings['filename_sanitized_enable'] === "yes"){
+		}else{
 			add_filter( 'sanitize_file_name', 'wpaddmimetypes_remove_underscore', 10, 2 );
 		}
 	}
