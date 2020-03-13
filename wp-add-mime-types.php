@@ -3,45 +3,55 @@
 Plugin Name: WP Add Mime Types 
 Plugin URI: 
 Description: The plugin additionally allows the mime types and file extensions to WordPress.
-Version: 2.5.3
+Version: 2.5.4
 Author: Kimiya Kitani
 Author URI: http://kitaney-wordpress.blogspot.jp/
 Text Domain: wp-add-mime-types
 Domain Path: /lang
 */
+define('WAMT_DEFAULT_VAR', '2.5.4');
+define('WAMT_PLUGIN_DIR', 'wp-add-mime-types');
+define('WAMT_PLUGIN_NAME', 'wp-add-mime-types');
+define('WAMT_PLUGIN_BASENAME', WAMT_PLUGIN_DIR . '/' . WAMT_PLUGIN_NAME . '.php');
+define('WAMT_SITEADMIN_SETTING_FILE', 'wp_add_mime_types_network_array');
+define('WAMT_SETTING_FILE', 'wp_add_mime_types_array');
+
+require_once( dirname( __FILE__  ) . '/includes/admin.php');
+
+// Uninstall settings when the plugin is uninstalled.
+function wamt_uninstaller(){
+	if(is_multisite())
+		delete_site_option(WAMT_SITEADMIN_SETTING_FILE);
+	delete_option(WAMT_SETTING_FILE);
+}
+if ( function_exists('register_uninstall_hook') )
+	register_uninstall_hook( __FILE__, 'wamt_uninstaller' );
 
 // Multi-language support.
-function enable_language_translation(){
- load_plugin_textdomain('wp-add-mime-types', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/');
+function wamt_enable_language_translation(){
+ load_plugin_textdomain('wp-add-mime-types')
+	or load_plugin_textdomain('wp-add-mime-types', false, dirname( WAMT_PLUGIN_BASENAME ) . '/lang/');
 }
-add_action('plugins_loaded', 'enable_language_translation');
-
-$plugin_basename = plugin_basename ( __FILE__ );
-
-$default_var = array(
-	'wp_add_mime_types'	=>	'2.5.3',
-);
+add_action('plugins_loaded', 'wamt_enable_language_translation');
 
 // Add Setting to WordPress 'Settings' menu for Multisite.
 if(is_multisite()){
-	add_action('network_admin_menu', 'network_add_to_settings_menu');
+	add_action('network_admin_menu', 'wamt_network_add_to_settings_menu');
 	require_once( dirname( __FILE__  ) . '/includes/network-admin.php');
 }
-add_action('admin_menu', 'add_to_settings_menu');
-require_once( dirname( __FILE__  ) . '/includes/admin.php');
+add_action('admin_menu', 'wamt_add_to_settings_menu');
 
 // Procedure for adding the mime types and file extensions to WordPress.
-function add_allow_upload_extension( $mimes ) {
-	global $plugin_basename;
+function wamt_add_allow_upload_extension( $mimes ) {
 	$mime_type_values = false;
 	
 	if ( ! function_exists( 'is_plugin_active_for_network' ) ) 
 		require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 
-	if(is_multisite() && is_plugin_active_for_network($plugin_basename))
-		$settings = get_site_option('wp_add_mime_types_network_array');
+	if(is_multisite() && is_plugin_active_for_network(WAMT_PLUGIN_BASENAME))
+		$settings = get_site_option(WAMT_SITEADMIN_SETTING_FILE);
 	else
-		$settings = get_option('wp_add_mime_types_array');
+		$settings = get_option(WAMT_SETTING_FILE);
 		
 	if(!isset($settings['mime_type_values']) || empty($settings['mime_type_values'])) return $mimes;
 	else
@@ -65,22 +75,21 @@ function add_allow_upload_extension( $mimes ) {
 }
 
 // Register the Procedure process to WordPress.
-add_filter( 'upload_mimes', 'add_allow_upload_extension');
+add_filter( 'upload_mimes', 'wamt_add_allow_upload_extension');
 
 // Using in add_allow_upload_extension_exception function.
-function wpaddmimetypes_remove_underscore($filename, $filename_raw){
+function wamt_remove_underscore($filename, $filename_raw){
 	return str_replace("_.", ".", $filename);
 }
 // Exception for WordPress 4.7.1 file contents check system using finfo_file (wp-includes/functions.php)
 // In case of custom extension in this plugins' setting, the WordPress 4.7.1 file contents check system is always true.
-function add_allow_upload_extension_exception( $data, $file, $filename,$mimes,$real_mime) {
-	global $plugin_basename;
+function wamt_add_allow_upload_extension_exception( $data, $file, $filename,$mimes,$real_mime) {
 	$mime_type_values = false;
 
-	if(is_multisite() && is_plugin_active_for_network($plugin_basename))
-		$settings = get_site_option('wp_add_mime_types_network_array');
+	if(is_multisite() && is_plugin_active_for_network(WAMT_PLUGIN_BASENAME))
+		$settings = get_site_option(WAMT_SITEADMIN_SETTING_FILE);
 	else
-		$settings = get_option('wp_add_mime_types_array');
+		$settings = get_option(WAMT_SETTING_FILE);
 
 	if ( ! function_exists( 'is_plugin_active_for_network' ) )
 		require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
@@ -116,7 +125,7 @@ function add_allow_upload_extension_exception( $data, $file, $filename,$mimes,$r
 		//var_dump($settings['filename_sanitized_enable']);
 		if(isset($settings['filename_sanitized_enable']) && $settings['filename_sanitized_enable'] === "yes"){
 		}else{
-			add_filter( 'sanitize_file_name', 'wpaddmimetypes_remove_underscore', 10, 2 );
+			add_filter( 'sanitize_file_name', 'wamt_remove_underscore', 10, 2 );
 		}
 	}
 
@@ -151,4 +160,4 @@ function add_allow_upload_extension_exception( $data, $file, $filename,$mimes,$r
 		return $data;
 }
 
-add_filter( 'wp_check_filetype_and_ext', 'add_allow_upload_extension_exception',10,5);
+add_filter( 'wp_check_filetype_and_ext', 'wamt_add_allow_upload_extension_exception',10,5);

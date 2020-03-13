@@ -4,7 +4,7 @@ Tags: mime,file extention
 Requires at least: 4.0
 Requires PHP: 5.6
 Tested up to: 5.3.2
-Stable tag: 2.5.3
+Stable tag: 2.5.4
 License: GPL v2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -78,6 +78,10 @@ Yes, each setting values are saved as the other setting items.
 
 
 == Changelog ==
+
+= 2.5.4 =
+* Added the function for removing this plugin's settings in the database when this plugin is uninstall. 
+* Fixed the function names for not influencing the function name for other plugins.
 
 = 2.5.3 = 
 * Fixed the issue of "Undefined variable: f_exp_more2_flag" warning.

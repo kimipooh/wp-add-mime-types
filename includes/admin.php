@@ -1,25 +1,22 @@
 <?php
-	
-function add_to_settings_menu(){
+function wamt_add_to_settings_menu(){
 	$admin_permission = 'manage_options';
 	// add_options_page (Title, Setting Title, Permission, Special Definition, function name); 
-	add_options_page(__('WP Add Mime Types Admin Settings', 'wp-add-mime-types'), __('Mime Type Settings','wp-add-mime-types'), $admin_permission, __FILE__,'admin_settings_page');
+	add_options_page(__('WP Add Mime Types Admin Settings', 'wp-add-mime-types'), __('Mime Type Settings','wp-add-mime-types'), $admin_permission, __FILE__, 'wamt_admin_settings_page');
 }
 
 // Processing Setting menu for the plugin.
-function admin_settings_page(){
-	global $plugin_basename;
-
+function wamt_admin_settings_page(){
 	if ( ! function_exists( 'is_plugin_active_for_network' ) ) 
 		require_once( ABSPATH . '/wp-admin/includes/plugin.php' );	
 
 	$admin_permission = 'manage_options';
 	// Loading the stored setting data (wp_add_mime_types_array) from WordPress database.
-	if(is_multisite() && is_plugin_active_for_network($plugin_basename)){
-		$settings = get_site_option('wp_add_mime_types_network_array');   	
-		$past_settings = get_option('wp_add_mime_types_array');
+	if(is_multisite() && is_plugin_active_for_network(WAMT_PLUGIN_BASENAME)){
+		$settings = get_site_option(WAMT_SITEADMIN_SETTING_FILE);   	
+		$past_settings = get_option(WAMT_SETTING_FILE);
 	}else
-		$settings = get_option('wp_add_mime_types_array');
+		$settings = get_option(WAMT_SETTING_FILE);
 
 	$permission = false;
 	// The user who can manage the WordPress option can only access the Setting menu of this plugin.
@@ -60,12 +57,12 @@ function admin_settings_page(){
 		}
 	}
 	// Update to WordPress Data.
-	if(is_multisite() && is_plugin_active_for_network($plugin_basename))
-		get_site_option('wp_add_mime_types_network_array', $settings);
+	if(is_multisite() && is_plugin_active_for_network(WAMT_PLUGIN_BASENAME))
+		get_site_option(WAMT_SITEADMIN_SETTING_FILE, $settings);
 	else{
 		if(isset($_POST["wamt-form"]) && $_POST["wamt-form"])
 			if(check_admin_referer("wamt-nonce-key", "wamt-form"))
-				update_option('wp_add_mime_types_array', $settings);
+				update_option(WAMT_SETTING_FILE, $settings);
 	}
 	
 ?>
@@ -73,7 +70,7 @@ function admin_settings_page(){
 
 <div id="add_mime_media_admin_menu">
   <h2><?php _e('WP Add Mime Types Admin Settings', 'wp-add-mime-types'); ?></h2>
-  
+
   <form method="post" action="">
 	<?php // for CSRF (Cross-Site Request Forgery): https://propansystem.net/blog/2018/02/20/post-6279/
 		wp_nonce_field("wamt-nonce-key", "wamt-form"); ?>
@@ -123,16 +120,16 @@ if(!empty($allowed_mime_values)){
      <fieldset style="border:1px solid #777777; width: 750px; padding-left: 6px; padding-bottom: 1em;">
 		<legend><h3><?php _e('Security Options','wp-add-mime-types'); ?></h3></legend>
 		<?php  _e('* The plugin avoids some security checks by WordPress core. If you do not want to avoid them, please turn on the following setting.','wp-add-mime-types'); ?></p>
-		<p><span style="color:red;"><?php  if(is_multisite() && is_plugin_active_for_network($plugin_basename)) _e('* The site administrator cannot add the value for mime type because the multisite is enabled. <br/>Please contact the multisite administrator if you would like to add the value.','wp-add-mime-types'); ?></span></p>
+		<p><span style="color:red;"><?php  if(is_multisite() && is_plugin_active_for_network(WAMT_PLUGIN_BASENAME)) _e('* The site administrator cannot add the value for mime type because the multisite is enabled. <br/>Please contact the multisite administrator if you would like to add the value.','wp-add-mime-types'); ?></span></p>
 
 	<?php //  ?>
 		<p>
 			<input type="hidden" name="security_attempt_enable" value="no" />
-			<input type="checkbox" name="security_attempt_enable" value="yes" <?php if( isset($settings['security_attempt_enable']) && $settings['security_attempt_enable'] === "yes" ) echo "checked"; ?> <?php if(!$permission || (is_multisite() && is_plugin_active_for_network($plugin_basename))) echo "disabled"; ?>/> <?php _e('Enable the attempt to determine the real file type of a file by WordPress core.','wp-add-mime-types'); ?>
+			<input type="checkbox" name="security_attempt_enable" value="yes" <?php if( isset($settings['security_attempt_enable']) && $settings['security_attempt_enable'] === "yes" ) echo "checked"; ?> <?php if(!$permission || (is_multisite() && is_plugin_active_for_network(WAMT_PLUGIN_BASENAME))) echo "disabled"; ?>/> <?php _e('Enable the attempt to determine the real file type of a file by WordPress core.','wp-add-mime-types'); ?>
 		</p>
 		<p>
 			<input type="hidden" name="filename_sanitized_enable" value="no" />
-			<input type="checkbox" name="filename_sanitized_enable" value="yes" <?php if( isset($settings['filename_sanitized_enable']) && $settings['filename_sanitized_enable'] === "yes" ) echo "checked"; ?> <?php if(!$permission || (is_multisite() && is_plugin_active_for_network($plugin_basename))) echo "disabled"; ?>/> <?php _e('Enable to sanitize the multiple file extensions within the filename by WordPress core.','wp-add-mime-types'); ?>
+			<input type="checkbox" name="filename_sanitized_enable" value="yes" <?php if( isset($settings['filename_sanitized_enable']) && $settings['filename_sanitized_enable'] === "yes" ) echo "checked"; ?> <?php if(!$permission || (is_multisite() && is_plugin_active_for_network(WAMT_PLUGIN_BASENAME))) echo "disabled"; ?>/> <?php _e('Enable to sanitize the multiple file extensions within the filename by WordPress core.','wp-add-mime-types'); ?>
 			</p>
      </fieldset>
 
@@ -140,10 +137,10 @@ if(!empty($allowed_mime_values)){
 		<legend><h3><?php _e('Add Values','wp-add-mime-types'); ?></h3></legend>
 		<p><?php  _e('* About the mime type value for the file extension, please search "mime type [file extension name] using a search engine.<br/>Ex. epub = application/epub+zip<br/>Reference: <a href="http://www.iana.org/assignments/media-types/media-types.xhtml" target="_blank">Media Types on the Internet Assigned Numbers Authority (IANA)</a><br/>* If the added mime type does not work, please deactivate other mime type plugins or the setting of other mime type plugins.','wp-add-mime-types'); ?>
 		<br/><?php  _e('* Ignore to the right of "#" on a line. ','wp-add-mime-types'); ?></p>
-		<p><span style="color:red;"><?php  if(is_multisite() && is_plugin_active_for_network($plugin_basename)) _e('* The site administrator cannot add the value for mime type because the multisite is enabled. <br/>Please contact the multisite administrator if you would like to add the value.','wp-add-mime-types'); ?></span></p>
+		<p><span style="color:red;"><?php  if(is_multisite() && is_plugin_active_for_network(WAMT_PLUGIN_BASENAME)) _e('* The site administrator cannot add the value for mime type because the multisite is enabled. <br/>Please contact the multisite administrator if you would like to add the value.','wp-add-mime-types'); ?></span></p>
 
 	<?php // If the permission is not allowed, the user can only read the setting. ?>
-		<textarea name="mime_type_values" cols="100" rows="10" <?php if(!$permission || (is_multisite() && is_plugin_active_for_network($plugin_basename))) echo "disabled"; ?>><?php if(isset($mimes) && is_array($mimes)) foreach ($mimes as $m_type=>$m_value) echo $m_type . "\t= " .$m_value . "\n"; ?></textarea>
+		<textarea name="mime_type_values" cols="100" rows="10" <?php if(!$permission || (is_multisite() && is_plugin_active_for_network(WAMT_PLUGIN_BASENAME))) echo "disabled"; ?>><?php if(isset($mimes) && is_array($mimes)) foreach ($mimes as $m_type=>$m_value) echo $m_type . "\t= " .$m_value . "\n"; ?></textarea>
      </fieldset>
 
 <?php
