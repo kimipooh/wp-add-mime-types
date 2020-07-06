@@ -79,7 +79,7 @@ Yes, each setting values are saved as the other setting items.
 
 == Changelog ==
 = 2.5.5 =
-* Fixed the error "the "Too few argument" for WordPress 5.0 or previous version.
+* Fixed the error "the "Too few argument" for WordPress 5.0 or previous versions.
 
 = 2.5.4 =
 * Added the function for removing this plugin's settings in the database when this plugin is uninstall. 
