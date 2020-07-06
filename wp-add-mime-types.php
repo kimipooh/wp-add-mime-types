@@ -3,13 +3,13 @@
 Plugin Name: WP Add Mime Types 
 Plugin URI: 
 Description: The plugin additionally allows the mime types and file extensions to WordPress.
-Version: 2.5.4
+Version: 2.5.5
 Author: Kimiya Kitani
 Author URI: http://kitaney-wordpress.blogspot.jp/
 Text Domain: wp-add-mime-types
 Domain Path: /lang
 */
-define('WAMT_DEFAULT_VAR', '2.5.4');
+define('WAMT_DEFAULT_VAR', '2.5.5');
 define('WAMT_PLUGIN_DIR', 'wp-add-mime-types');
 define('WAMT_PLUGIN_NAME', 'wp-add-mime-types');
 define('WAMT_PLUGIN_BASENAME', WAMT_PLUGIN_DIR . '/' . WAMT_PLUGIN_NAME . '.php');
@@ -83,7 +83,8 @@ function wamt_remove_underscore($filename, $filename_raw){
 }
 // Exception for WordPress 4.7.1 file contents check system using finfo_file (wp-includes/functions.php)
 // In case of custom extension in this plugins' setting, the WordPress 4.7.1 file contents check system is always true.
-function wamt_add_allow_upload_extension_exception( $data, $file, $filename,$mimes,$real_mime) {
+
+function wamt_add_allow_upload_extension_exception( $data, $file, $filename,$mimes,$real_mime=null) {
 	$mime_type_values = false;
 
 	if(is_multisite() && is_plugin_active_for_network(WAMT_PLUGIN_BASENAME))
@@ -160,4 +161,10 @@ function wamt_add_allow_upload_extension_exception( $data, $file, $filename,$mim
 		return $data;
 }
 
-add_filter( 'wp_check_filetype_and_ext', 'wamt_add_allow_upload_extension_exception',10,5);
+// It's different arguments between WordPress 5.1 and previous versions.
+global $wp_version;
+if ( version_compare( $wp_version, '5.1') >= 0):
+	add_filter( 'wp_check_filetype_and_ext', 'wamt_add_allow_upload_extension_exception',10,5);
+else:
+	add_filter( 'wp_check_filetype_and_ext', 'wamt_add_allow_upload_extension_exception',10,4);
+endif;
