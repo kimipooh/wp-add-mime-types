@@ -3,13 +3,13 @@
 Plugin Name: WP Add Mime Types 
 Plugin URI: 
 Description: The plugin additionally allows the mime types and file extensions to WordPress.
-Version: 2.5.5
+Version: 2.5.6
 Author: Kimiya Kitani
 Author URI: http://kitaney-wordpress.blogspot.jp/
 Text Domain: wp-add-mime-types
 Domain Path: /lang
 */
-define('WAMT_DEFAULT_VAR', '2.5.5');
+define('WAMT_DEFAULT_VAR', '2.5.6');
 define('WAMT_PLUGIN_DIR', 'wp-add-mime-types');
 define('WAMT_PLUGIN_NAME', 'wp-add-mime-types');
 define('WAMT_PLUGIN_BASENAME', WAMT_PLUGIN_DIR . '/' . WAMT_PLUGIN_NAME . '.php');
@@ -44,7 +44,7 @@ add_action('admin_menu', 'wamt_add_to_settings_menu');
 // Procedure for adding the mime types and file extensions to WordPress.
 function wamt_add_allow_upload_extension( $mimes ) {
 	$mime_type_values = false;
-	
+
 	if ( ! function_exists( 'is_plugin_active_for_network' ) ) 
 		require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 
@@ -56,7 +56,7 @@ function wamt_add_allow_upload_extension( $mimes ) {
 	if(!isset($settings['mime_type_values']) || empty($settings['mime_type_values'])) return $mimes;
 	else
 		$mime_type_values = unserialize($settings['mime_type_values']);
-	
+
 	if(!empty($mime_type_values)){
 		foreach ((array)$mime_type_values as $line){
 			// Ignore to the right of '#' on a line.
@@ -132,6 +132,12 @@ function wamt_add_allow_upload_extension_exception( $data, $file, $filename,$mim
 
 	// If "security_attempt_enable" option disables (default) in the admin menu, the plugin avoids the security check regarding a file extension by WordPress core because of flexible management.
 	if(isset($settings['security_attempt_enable']) && $settings['security_attempt_enable'] === "yes"){
+		if(isset($settings['file_type_debug']) && $settings['file_type_debug'] === "yes"):
+			$finfo     = finfo_open( FILEINFO_MIME_TYPE );
+			$real_mime = finfo_file($finfo,$file);
+			var_dump(__("WordPress recognizes that the file type is [". finfo_file($finfo,$file) . "].",'wp-add-mime-types'));
+			finfo_close($finfo);
+		endif;
 		return $data;
 	}
 

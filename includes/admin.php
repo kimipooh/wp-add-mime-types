@@ -13,7 +13,7 @@ function wamt_admin_settings_page(){
 	$admin_permission = 'manage_options';
 	// Loading the stored setting data (wp_add_mime_types_array) from WordPress database.
 	if(is_multisite() && is_plugin_active_for_network(WAMT_PLUGIN_BASENAME)){
-		$settings = get_site_option(WAMT_SITEADMIN_SETTING_FILE);   	
+		$settings = get_site_option(WAMT_SITEADMIN_SETTING_FILE);
 		$past_settings = get_option(WAMT_SETTING_FILE);
 	}else
 		$settings = get_option(WAMT_SETTING_FILE);
@@ -54,11 +54,17 @@ function wamt_admin_settings_page(){
 				if(isset($_POST['filename_sanitized_enable']))
 					$settings['filename_sanitized_enable'] = wp_strip_all_tags($_POST['filename_sanitized_enable']);
 			}
+			if(!isset($settings['file_type_debug']))
+				$settings['file_type_debug'] = "no";
+			else{
+				if(isset($_POST['file_type_debug']))
+					$settings['file_type_debug'] = wp_strip_all_tags($_POST['file_type_debug']);
+			}
 		}
 	}
 	// Update to WordPress Data.
 	if(is_multisite() && is_plugin_active_for_network(WAMT_PLUGIN_BASENAME))
-		get_site_option(WAMT_SITEADMIN_SETTING_FILE, $settings);
+		;//get_site_option(WAMT_SITEADMIN_SETTING_FILE, $settings);
 	else{
 		if(isset($_POST["wamt-form"]) && $_POST["wamt-form"])
 			if(check_admin_referer("wamt-nonce-key", "wamt-form"))
@@ -130,6 +136,10 @@ if(!empty($allowed_mime_values)){
 		<p>
 			<input type="hidden" name="filename_sanitized_enable" value="no" />
 			<input type="checkbox" name="filename_sanitized_enable" value="yes" <?php if( isset($settings['filename_sanitized_enable']) && $settings['filename_sanitized_enable'] === "yes" ) echo "checked"; ?> <?php if(!$permission || (is_multisite() && is_plugin_active_for_network(WAMT_PLUGIN_BASENAME))) echo "disabled"; ?>/> <?php _e('Enable to sanitize the multiple file extensions within the filename by WordPress core.','wp-add-mime-types'); ?>
+			</p>
+		<p>
+			<input type="hidden" name="file_type_debug" value="no" />
+			<input type="checkbox" name="file_type_debug" value="yes" <?php if( isset($settings['file_type_debug']) && $settings['file_type_debug'] === "yes" ) echo "checked"; ?> <?php if(!$permission || (is_multisite() && is_plugin_active_for_network(WAMT_PLUGIN_BASENAME))) echo "disabled"; ?>/> <?php _e('Enable to debug output for file types recognized by WordPress when a file is uploaded by the media. <br/>* By enabling both this option and the "Enable the attempt to determine the real file type of a file by WordPress core.", the file type is displayed if it is uploaded from Media.<br/>* PLEASE keep in mind that a file uploads are stopped while they are being processed if the both of two options are enabled. Therefore, be sure to disable this debugging option after debugging.','wp-add-mime-types'); ?>
 			</p>
      </fieldset>
 

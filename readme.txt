@@ -3,8 +3,8 @@ Contributors: Kimiya Kitani
 Tags: mime,file extention
 Requires at least: 4.0
 Requires PHP: 5.6
-Tested up to: 5.4.2
-Stable tag: 2.5.5
+Tested up to: 5.5.3
+Stable tag: 2.5.6
 License: GPL v2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,6 +39,9 @@ You can see the list of allowed mime types and file extensions by WordPress.
  If the multisite is enabled, the multisite network administrator can add/change/delete the mime type value in the multisite network setting menu. And the multisite network administrator or the site administrator can only see the past value (cannot change) before the site was migrated to the multisite.
  
 == Frequently Asked Questions ==
+
+= How to check the uploaded file type from Media. =
+WordPress recognizes the file mime type by finfo_file function (wp-includes/functions.php). However, sometimes, the standard MIME type of a file and the MIME type of a WordPress-recognized file are different. By enabling both this option (in setting menu) and the "Enable the attempt to determine the real file type of a file by WordPress core.", the file type is displayed if it is from Media. PLEASE keep in mind that a file uploads are stopped while they are being processed if the both of two options are enabled. Therefore, be sure to disable this debugging option after debugging.
 
 = Cannot work =
 If the added mime type does not work, please deactivate other mime type plugins or the setting of other mime type plugins.
@@ -78,6 +81,9 @@ Yes, each setting values are saved as the other setting items.
 
 
 == Changelog ==
+= 2.5.6 =
+* Added the "Enable to debug output for file types recognized by WordPress when a file is uploaded by the media." security option. In detail, please see "Frequently Asked Questions" section.
+
 = 2.5.5 =
 * Fixed the error "the "Too few argument" for WordPress 5.0 or previous versions.
 
