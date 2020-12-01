@@ -3,7 +3,7 @@ Contributors: Kimiya Kitani
 Tags: mime,file extention
 Requires at least: 4.0
 Requires PHP: 5.6
-Tested up to: 5.5.3
+Tested up to: 5.6
 Stable tag: 2.5.6
 License: GPL v2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -78,11 +78,12 @@ Yes, each setting values are saved as the other setting items.
 1. Setting Menu
 2. Setting Menu in case of the multisite
 3. Ignore to the right of '#' on a line
-
+4. Security Options
 
 == Changelog ==
 = 2.5.6 =
 * Added the "Enable to debug output for file types recognized by WordPress when a file is uploaded by the media." security option. In detail, please see "Frequently Asked Questions" section.
+* Tested up to WordPress 5.6 and PHP 7.4.
 
 = 2.5.5 =
 * Fixed the error "the "Too few argument" for WordPress 5.0 or previous versions.
