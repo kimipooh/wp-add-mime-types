@@ -9,7 +9,7 @@ Author URI: http://kitaney-wordpress.blogspot.jp/
 Text Domain: wp-add-mime-types
 Domain Path: /lang
 */
-define('WAMT_DEFAULT_VAR', '2.5.6');
+define('WAMT_DEFAULT_VAR', '2.5.7');
 define('WAMT_PLUGIN_DIR', 'wp-add-mime-types');
 define('WAMT_PLUGIN_NAME', 'wp-add-mime-types');
 define('WAMT_PLUGIN_BASENAME', WAMT_PLUGIN_DIR . '/' . WAMT_PLUGIN_NAME . '.php');
