@@ -9,7 +9,7 @@ Author URI: http://kitaney-wordpress.blogspot.jp/
 Text Domain: wp-add-mime-types
 Domain Path: /lang
 */
-define('WAMT_DEFAULT_VAR', '2.5.7');
+define('WAMT_DEFAULT_VAR', '2.5.8');
 define('WAMT_PLUGIN_DIR', 'wp-add-mime-types');
 define('WAMT_PLUGIN_NAME', 'wp-add-mime-types');
 define('WAMT_PLUGIN_BASENAME', WAMT_PLUGIN_DIR . '/' . WAMT_PLUGIN_NAME . '.php');
@@ -96,7 +96,7 @@ function wamt_add_allow_upload_extension_exception( $data, $file, $filename,$mim
 		require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 
 	if(!isset($settings['mime_type_values']) || empty($settings['mime_type_values'])) 
-		return compact( 'ext', 'type', 'proper_filename' );
+		return $data;
 	else
 		$mime_type_values = unserialize($settings['mime_type_values']);
 
@@ -141,6 +141,7 @@ function wamt_add_allow_upload_extension_exception( $data, $file, $filename,$mim
 		return $data;
 	}
 
+		
 	$flag = false;
 	if(!empty($mime_type_values)){
 		foreach ((array)$mime_type_values as $line){

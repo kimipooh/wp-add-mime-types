@@ -4,7 +4,7 @@ Tags: mime,file extention
 Requires at least: 4.0
 Requires PHP: 5.6
 Tested up to: 5.6
-Stable tag: 2.5.7
+Stable tag: 2.5.8
 License: GPL v2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,9 @@ Yes, each setting values are saved as the other setting items.
 4. Security Options
 
 == Changelog ==
+= 2.5.8 = 
+* Fixed  the issue of the media uploads failing when activating this plugin for the first time, if the plugin settings are not saved whenever.
+
 = 2.5.7 = 
 * Removed the folder (trunk) for this plugin in this plugin folder. The “trunk” folder was not needed. Due to this, activating the plugin in version 2.5.6, you might get an error message "Error: The plugin does not have a valid header".
 
