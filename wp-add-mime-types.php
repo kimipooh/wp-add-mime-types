@@ -3,13 +3,13 @@
 Plugin Name: WP Add Mime Types 
 Plugin URI: 
 Description: The plugin additionally allows the mime types and file extensions to WordPress.
-Version: 2.5.7
+Version: 3.0.0
 Author: Kimiya Kitani
 Author URI: http://kitaney-wordpress.blogspot.jp/
 Text Domain: wp-add-mime-types
 Domain Path: /lang
 */
-define('WAMT_DEFAULT_VAR', '2.5.8');
+define('WAMT_DEFAULT_VAR', '3.0.0');
 define('WAMT_PLUGIN_DIR', 'wp-add-mime-types');
 define('WAMT_PLUGIN_NAME', 'wp-add-mime-types');
 define('WAMT_PLUGIN_BASENAME', WAMT_PLUGIN_DIR . '/' . WAMT_PLUGIN_NAME . '.php');
@@ -66,8 +66,19 @@ function wamt_add_allow_upload_extension( $mimes ) {
 			// If 2 or more "=" character in the line data, it will be ignored.
 			$line_value = explode("=", $line);
 			if(count($line_value) != 2) continue;
-			// "　" is the Japanese multi-byte space. If the character is found out, it automatically change the space. 
-			$mimes[trim($line_value[0])] = trim(str_replace("　", " ", $line_value[1])); 
+			
+			// If the head in each line is set to '-', then the MIME type restricts.
+			// ex. -bmp = image/bmp 
+			// The files which has "bmp" file extention becomes not to be able to upload.
+			$line_pref_str = explode("-", $line_value[0]);
+			if(count($line_pref_str) === 2): 
+				if(isset($mimes[trim($line_pref_str[1])])):
+					unset($mimes[trim($line_pref_str[1])]);
+				endif;
+			else:
+				// "　" is the Japanese multi-byte space. If the character is found out, it automatically change the space. 
+				$mimes[trim($line_value[0])] = trim(str_replace("　", " ", $line_value[1])); 
+			endif;
 		}
 	}
 

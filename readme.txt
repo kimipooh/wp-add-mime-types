@@ -3,8 +3,8 @@ Contributors: Kimiya Kitani
 Tags: mime,file extention
 Requires at least: 4.0
 Requires PHP: 5.6
-Tested up to: 5.6
-Stable tag: 2.5.8
+Tested up to: 5.6.2
+Stable tag: 3.0.0
 License: GPL v2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,6 +74,13 @@ The setting values in each site administration dashboard in case of activating t
 
 Yes, each setting values are saved as the other setting items.
 
+= Is it possible to restrict the extensions?  =
+
+Yes, it is available on the version 3.0.0.
+ If the head in each line is set to '-', then the MIME type restricts.
+ex. -bmp = image/bmp 
+The files which has "bmp" file extention becomes not to be able to upload.
+
 == Screenshots ==
 1. Setting Menu
 2. Setting Menu in case of the multisite
@@ -81,6 +88,11 @@ Yes, each setting values are saved as the other setting items.
 4. Security Options
 
 == Changelog ==
+= 3.0.0 =
+- Added the mime type restriction function by using '-' prefix. If the head in each line is set to '-', then the MIME type restricts. In case of "-bmp = image/bmp",  the files which has "bmp" file extention becomes not to be able to upload.
+- Fixed the warning on the multisite.  
+- Tested up WordPress 5.6.2 with PHP 8.0.0.
+
 = 2.5.8 = 
 * Fixed  the issue of the media uploads failing when activating this plugin for the first time, if the plugin settings are not saved whenever.
 

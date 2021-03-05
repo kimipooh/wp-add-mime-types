@@ -146,7 +146,8 @@ if(!empty($allowed_mime_values)){
      <fieldset style="border:1px solid #777777; width: 750px; padding-left: 6px; padding-bottom: 1em;">
 		<legend><h3><?php _e('Add Values','wp-add-mime-types'); ?></h3></legend>
 		<p><?php  _e('* About the mime type value for the file extension, please search "mime type [file extension name] using a search engine.<br/>Ex. epub = application/epub+zip<br/>Reference: <a href="http://www.iana.org/assignments/media-types/media-types.xhtml" target="_blank">Media Types on the Internet Assigned Numbers Authority (IANA)</a><br/>* If the added mime type does not work, please deactivate other mime type plugins or the setting of other mime type plugins.','wp-add-mime-types'); ?>
-		<br/><?php  _e('* Ignore to the right of "#" on a line. ','wp-add-mime-types'); ?></p>
+		<br/><?php  _e('* Ignore to the right of "#" on a line. ','wp-add-mime-types'); ?>
+		<br/><?php  _e('*  If the head in each line is set to "-", then the MIME type restricts.<br/>ex. -bmp = image/bmp<br/>The files which has "bmp" file extention becomes not to be able to upload.','wp-add-mime-types'); ?></p>
 		<p><span style="color:red;"><?php  if(is_multisite() && is_plugin_active_for_network(WAMT_PLUGIN_BASENAME)) _e('* The site administrator cannot add the value for mime type because the multisite is enabled. <br/>Please contact the multisite administrator if you would like to add the value.','wp-add-mime-types'); ?></span></p>
 
 	<?php // If the permission is not allowed, the user can only read the setting. ?>
@@ -155,7 +156,9 @@ if(!empty($allowed_mime_values)){
 
 <?php
 	if(is_multisite() && current_user_can('manage_network_options')){
-		$past_mime_type_values = unserialize($past_settings['mime_type_values']);
+		$past_mime_type_values = "";
+		if(isset($past_settings['mime_type_values']))
+			$past_mime_type_values = unserialize($past_settings['mime_type_values']);
 		if(!empty($past_mime_type_values)){
 
 ?>

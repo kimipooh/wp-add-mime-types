@@ -138,7 +138,8 @@ if(!empty($allowed_mime_values)){
      <fieldset style="border:1px solid #777777; width: 750px; padding-left: 6px;">
 		<legend><h3><?php _e('Add Values','wp-add-mime-types'); ?></h3></legend>
 		<p><?php  _e('* About the mime type value for the file extension, please search "mime type [file extension name] using a search engine.<br/>Ex. epub = application/epub+zip<br/>Reference: <a href="http://www.iana.org/assignments/media-types/media-types.xhtml" target="_blank">Media Types on the Internet Assigned Numbers Authority (IANA)</a><br/>* If the added mime type does not work, please deactivate other mime type plugins or the setting of other mime type plugins.','wp-add-mime-types'); ?>
-		<br/><?php  _e('* Ignore to the right of "#" on a line. ','wp-add-mime-types'); ?></p>
+		<br/><?php  _e('* Ignore to the right of "#" on a line. ','wp-add-mime-types'); ?>
+		<br/><?php  _e('*  If the head in each line is set to "-", then the MIME type restricts.<br/>ex. -bmp = image/bmp<br/>The files which has "bmp" file extention becomes not to be able to upload.','wp-add-mime-types'); ?></p>
 
 	<?php // If the permission is not allowed, the user can only read the setting. ?>
 		<textarea name="mime_type_values" cols="100" rows="10" <?php if(!$permission) echo "disabled"; ?>><?php if(isset($mimes) && is_array($mimes)) foreach ($mimes as $m_type=>$m_value) echo $m_type . "\t= " .$m_value . "\n"; ?></textarea>
