@@ -3,7 +3,7 @@ Contributors: Kimiya Kitani
 Tags: mime,file extention
 Requires at least: 4.0
 Requires PHP: 5.6
-Tested up to: 5.8
+Tested up to: 6.0
 Stable tag: 3.0.0
 License: GPL v2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -93,6 +93,7 @@ The files which has "bmp" file extention becomes not to be able to upload.
 - Fixed the warning on the multisite.  
 - Tested up WordPress 5.6.2 with PHP 8.0.0.
 - Tested up WordPress 5.8
+- Tested up WordPress 6.0
 
 = 2.5.8 = 
 * Fixed  the issue of the media uploads failing when activating this plugin for the first time, if the plugin settings are not saved whenever.
