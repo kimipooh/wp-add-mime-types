@@ -53,7 +53,7 @@ function wamt_add_allow_upload_extension( $mimes ) {
 	else
 		$settings = get_option(WAMT_SETTING_FILE);
 		
-	if( !isset($settings['mime_type_values'] ) return $mimes;
+	if( !isset($settings['mime_type_values'] ) ) return $mimes;
 	$mime_type_values = unserialize($settings['mime_type_values']);
 	if( empty($mime_type_values) ) return $mimes;
 	
