@@ -3,13 +3,13 @@
 Plugin Name: WP Add Mime Types 
 Plugin URI: 
 Description: The plugin additionally allows the mime types and file extensions to WordPress.
-Version: 3.0.1
+Version: 3.0.2
 Author: Kimiya Kitani
 Author URI: http://kitaney-wordpress.blogspot.jp/
 Text Domain: wp-add-mime-types
 Domain Path: /lang
 */
-define('WAMT_DEFAULT_VAR', '3.0.0');
+define('WAMT_DEFAULT_VAR', '3.0.2');
 define('WAMT_PLUGIN_DIR', 'wp-add-mime-types');
 define('WAMT_PLUGIN_NAME', 'wp-add-mime-types');
 define('WAMT_PLUGIN_BASENAME', WAMT_PLUGIN_DIR . '/' . WAMT_PLUGIN_NAME . '.php');
@@ -43,7 +43,7 @@ add_action('admin_menu', 'wamt_add_to_settings_menu');
 
 // Procedure for adding the mime types and file extensions to WordPress.
 function wamt_add_allow_upload_extension( $mimes ) {
-	$mime_type_values = false;
+	$mime_type_values = array();
 
 	if ( ! function_exists( 'is_plugin_active_for_network' ) ) 
 		require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
@@ -53,10 +53,9 @@ function wamt_add_allow_upload_extension( $mimes ) {
 	else
 		$settings = get_option(WAMT_SETTING_FILE);
 		
-//	if(!isset($settings['mime_type_values']) || empty($settings['mime_type_values'])) return $mimes;
-//	else
+	if( !isset($settings['mime_type_values'] ) return $mimes;
 	$mime_type_values = unserialize($settings['mime_type_values']);
-	if( ! $mime_type_values ) return $mimes;
+	if( empty($mime_type_values) ) return $mimes;
 	
 	if(!empty($mime_type_values)){
 		foreach ((array)$mime_type_values as $line){
