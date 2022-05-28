@@ -4,7 +4,7 @@ Tags: mime,file extention
 Requires at least: 4.0
 Requires PHP: 5.6
 Tested up to: 6.0
-Stable tag: 3.0.2
+Stable tag: 3.0.3
 License: GPL v2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -88,6 +88,9 @@ The files which has "bmp" file extention becomes not to be able to upload.
 4. Security Options
 
 == Changelog ==
+= 3.0.3 =
+-  Fixed warning checking when retrieving serialized data.
+
 = 3.0.2 =
 -  Enhanced error checking when retrieving serialized data.
 
