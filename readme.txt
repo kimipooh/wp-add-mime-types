@@ -1,9 +1,9 @@
 === WP Add Mime Types ===
 Contributors: Kimiya Kitani
 Tags: mime,file extention
-Requires at least: 4.0
+Requires at least: 5.4
 Requires PHP: 5.6
-Tested up to: 6.0
+Tested up to: 6.1
 Stable tag: 3.0.3
 License: GPL v2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
