@@ -89,7 +89,9 @@ The files which has "bmp" file extention becomes not to be able to upload.
 
 == Changelog ==
 = 3.0.3 =
--  Fixed warning checking when retrieving serialized data.
+- Fixed warning checking when retrieving serialized data.
+- Tested up to WordPress 6.1
+- Changed the supported version of WordPress from 4.0 to 5.4 or higher.
 
 = 3.0.2 =
 -  Enhanced error checking when retrieving serialized data.
