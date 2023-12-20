@@ -22,7 +22,7 @@ function wamt_admin_settings_page(){
 	// The user who can manage the WordPress option can only access the Setting menu of this plugin.
 	if(current_user_can($admin_permission)) $permission = true; 
 	// If the adding data is not set, the value "mime_type_values" sets "empty".
-	$mime_type_values = "";
+	$mime_type_values = array();
 	if(isset($settings['mime_type_values']) && !empty($settings['mime_type_values']))
 		$mime_type_values = unserialize($settings['mime_type_values']);
 		
