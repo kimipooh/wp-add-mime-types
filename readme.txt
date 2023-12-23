@@ -4,7 +4,7 @@ Tags: mime,file extention
 Requires at least: 6.2
 Requires PHP: 7.4
 Tested up to: 6.4.2
-Stable tag: 3.1.0
+Stable tag: 3.1.1
 License: GPL v2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -88,6 +88,8 @@ The files which has "bmp" file extention becomes not to be able to upload.
 4. Security Options
 
 == Changelog ==
+= 3.1.1 =
+- Fixes the type format mismatch issues since PHP 8.1 or later.
 = 3.1.0 =
 - Fixes type format mismatch issues in variable initialisation.
 - Tested up WordPress 6.4.2 with PHP 8.2.0.

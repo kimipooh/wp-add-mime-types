@@ -17,6 +17,8 @@ function wamt_admin_settings_page(){
 		$past_settings = get_option(WAMT_SETTING_FILE);
 	}else
 		$settings = get_option(WAMT_SETTING_FILE);
+		
+	if($settings === false) $settings = array();
 
 	$permission = false;
 	// The user who can manage the WordPress option can only access the Setting menu of this plugin.

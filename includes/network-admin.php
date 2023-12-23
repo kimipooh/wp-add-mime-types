@@ -17,6 +17,7 @@ function wamt_network_admin_settings_page(){
 	$admin_permission = 'manage_network_options';
 	// Loading the stored setting data (wp_add_mime_types_network_array) from WordPress database.
 	$settings = get_site_option(WAMT_SITEADMIN_SETTING_FILE);
+	if($settings === false) $settings = array();
 
 	$permission = false;
 	// The user who can manage the WordPress option can only access the Setting menu of this plugin.
