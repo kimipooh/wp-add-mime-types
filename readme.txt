@@ -1,5 +1,5 @@
 === WP Add Mime Types ===
-Contributors: Kimiya Kitani
+Contributors: kimipooh
 Tags: mime,file extention
 Requires at least: 6.2
 Requires PHP: 7.4
