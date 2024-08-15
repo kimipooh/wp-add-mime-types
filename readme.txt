@@ -3,7 +3,7 @@ Contributors: kimipooh
 Tags: mime,file extention
 Requires at least: 6.2
 Requires PHP: 7.4
-Tested up to: 6.5.2
+Tested up to: 6.6.1
 Stable tag: 3.1.1
 License: GPL v2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -39,6 +39,13 @@ You can see the list of allowed mime types and file extensions by WordPress.
  If the multisite is enabled, the multisite network administrator can add/change/delete the mime type value in the multisite network setting menu. And the multisite network administrator or the site administrator can only see the past value (cannot change) before the site was migrated to the multisite.
  
 == Frequently Asked Questions ==
+
+=  It fails to upload a file for the security reasons of WordPress despite having set it up with this plugin! =
+If it fails to upload a file for the security reasons of WordPress despite having set it up with this plugin, then the MIME type of the uploaded file recognised by WordPress may be different from the MIME type you have set. In that case, you need to find out how WordPress recognised the MIME type of the file.
+So, turn on “Enable to debug output for file types recognized by WordPress when a file is uploaded by the media.” setting.
+and upload a file and set “mime type” recognized by WordPress in the setting of this plugin.
+Please keep in mind that the “Enable to debug output for file types recognised by WordPress when a file is uploaded by the media.” setting must be turned off after you finish checking the mime type. If it is left on, file uploads will not work.
+Reference: https://docs.google.com/presentation/d/1o4YHqP7s-EcctYSEYM2L7HLJtqhjA_mkY4VMjvTdj20/edit?usp=sharing (Google Slide)
 
 = How to check the uploaded file type from Media. =
 WordPress recognizes the file mime type by finfo_file function (wp-includes/functions.php). However, sometimes, the standard MIME type of a file and the MIME type of a WordPress-recognized file are different. By enabling both this option (in setting menu) and the "Enable the attempt to determine the real file type of a file by WordPress core.", the file type is displayed if it is from Media. PLEASE keep in mind that a file uploads are stopped while they are being processed if the both of two options are enabled. Therefore, be sure to disable this debugging option after debugging.
@@ -90,6 +97,8 @@ The files which has "bmp" file extention becomes not to be able to upload.
 == Changelog ==
 = 3.1.1 =
 - Fixes the type format mismatch issues since PHP 8.1 or later.
+* Tested up WordPress 6.6.1 with PHP 8.3.6.
+
 = 3.1.0 =
 - Fixes type format mismatch issues in variable initialisation.
 - Tested up WordPress 6.4.2 with PHP 8.2.0.
