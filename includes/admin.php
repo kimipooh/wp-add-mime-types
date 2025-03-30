@@ -26,7 +26,7 @@ function wamt_admin_settings_page(){
 	// If the adding data is not set, the value "mime_type_values" sets "empty".
 	$mime_type_values = array();
 	if(isset($settings['mime_type_values']) && !empty($settings['mime_type_values']))
-		$mime_type_values = unserialize($settings['mime_type_values']);
+		$mime_type_values = $settings['mime_type_values'];
 		
 	// When the adding data is saved (posted) at the setting menu, the data will update to the WordPress database after the security check
 	if(isset($_POST["wamt-form"]) && $_POST["wamt-form"]){
@@ -38,11 +38,11 @@ function wamt_admin_settings_page(){
 					foreach($mime_type_values as $m_type=>$m_value)
 					// "　" is the Japanese multi-byte space. If the character is found out, it automatically change the space. 
 						$mime_type_values[$m_type] = trim(str_replace("　", " ", $m_value));
-					$settings['mime_type_values'] = serialize($mime_type_values);
+					$settings['mime_type_values'] = $mime_type_values;
 				}
 			}
 			//else
-				//$mime_type_values = unserialize($settings['mime_type_values']);
+				//$mime_type_values = $settings['mime_type_values'];
 
 			if(!isset($settings['security_attempt_enable']))
 				$settings['security_attempt_enable'] = "no";
@@ -160,7 +160,7 @@ if(!empty($allowed_mime_values)){
 	if(is_multisite() && current_user_can('manage_network_options')){
 		$past_mime_type_values = "";
 		if(isset($past_settings['mime_type_values']))
-			$past_mime_type_values = unserialize($past_settings['mime_type_values']);
+			$past_mime_type_values = $past_settings['mime_type_values'];
 		if(!empty($past_mime_type_values)){
 
 ?>
